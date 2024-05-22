@@ -89,7 +89,8 @@ public final class CloudBase extends CloudAPI {
         }
 
         this.nodeService.localNode().close();
-        this.terminal.close();
+
+        this.loggerFactory().close();
         System.exit(0);
     }
 

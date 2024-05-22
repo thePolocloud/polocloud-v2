@@ -6,4 +6,6 @@ public interface LoggerHandler {
 
     void print(Level level, String message, Throwable throwable, Object... objects);
 
+    void close();
+
 }

@@ -28,12 +28,12 @@ public final class CloudServiceFactoryImpl implements CloudServiceFactory {
         var service = new LocalCloudService(cloudGroup, this.nextServiceId(cloudGroup), UUID.randomUUID());
         ((CloudServiceProviderImpl) CloudAPI.instance().serviceProvider()).registerService(service);
 
-        CloudAPI.instance().logger().info("Server " + service.name() + " is starting now on node " + CloudAPI.instance().nodeService().localNode().name() + "&2.");
+        CloudAPI.instance().logger().info("The Service &2'&4" + service.name() + "&2' &1is now starting on node &2'&4" + CloudAPI.instance().nodeService().localNode().name() + "&2'&2.");
 
         Files.createDirectoryIfNotExists(service.runningFolder());
 
         // download and/or copy platform file to service
-        CloudGroupPlatformService platformService = ((CloudServiceGroupProvider) CloudBase.instance().groupProvider()).platformService();
+        var platformService = ((CloudServiceGroupProvider) CloudBase.instance().groupProvider()).platformService();
         platformService.preparePlatform(service);
 
         var args = new LinkedList<>();
@@ -47,8 +47,7 @@ public final class CloudServiceFactoryImpl implements CloudServiceFactory {
         args.add("--bootstrap=" + service.group().platform());
         args.addAll(Arrays.stream(platformService.find(cloudGroup.platform()).platformsArguments()).toList());
 
-        var processBuilder = new ProcessBuilder().directory(service.runningFolder().toFile())
-                .command(args.toArray(String[]::new));
+        var processBuilder = new ProcessBuilder().directory(service.runningFolder().toFile()).command(args.toArray(String[]::new));
 
         processBuilder.environment().put("serviceId", service.id().toString());
         service.process(processBuilder.start());
@@ -72,7 +71,7 @@ public final class CloudServiceFactoryImpl implements CloudServiceFactory {
         }
 
         java.nio.file.Files.deleteIfExists(localCloudService.runningFolder());
-        CloudAPI.instance().logger().info("Server " + service.name() + " is stopped now.");
+        CloudAPI.instance().logger().info("The service &2'&4" + service.name() + "&2'&1 has been stopped successfully");
     }
 
     private int nextServiceId(CloudGroup cloudGroup) {
@@ -88,13 +87,12 @@ public final class CloudServiceFactoryImpl implements CloudServiceFactory {
     }
 
     private void deleteDirectory(File directoryToBeDeleted) {
-        File[] allContents = directoryToBeDeleted.listFiles();
+        var allContents = directoryToBeDeleted.listFiles();
         if (allContents != null) {
-            for (File file : allContents) {
+            for (var file : allContents) {
                 deleteDirectory(file);
             }
         }
         directoryToBeDeleted.delete();
     }
 }
-

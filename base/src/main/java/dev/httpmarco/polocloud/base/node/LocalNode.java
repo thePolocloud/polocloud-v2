@@ -23,7 +23,7 @@ public final class LocalNode extends AbstractNode implements dev.httpmarco.poloc
         server.listen(CloudServiceRegisterPacket.class, (channelTransmit, cloudServiceRegisterPacket) -> {
             var service = CloudAPI.instance().serviceProvider().find(cloudServiceRegisterPacket.uuid());
 
-            CloudAPI.instance().logger().info("Server " + service.name() + " is now successfully started up&2.");
+            CloudAPI.instance().logger().info("The Service &2'&4" + service.name() + "&2' &1has been started successfully&2.");
         });
     }
 

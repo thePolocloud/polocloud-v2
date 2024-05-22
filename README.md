@@ -5,13 +5,13 @@ cloud group optional properties
 
 - `static` - 
 - `maxOnlineServices` - 
-- `startAArguments` - 
+- `startArguments` - 
 - `percentageToStartNewService` - 
 - `fallback` - 
-- `prefferedFallaback` - 
+- `preferredFallback` - 
 - `startPriority` - 
 - `mergedTemplates` - 
-- `envirmentVariables` - 
-- `name-separater` - 
+- `environmentVariables` - 
+- `name-separator` - 
 - `restartOnTemplateChange` - 
 - `autoFileDeleteOnShutdown` -

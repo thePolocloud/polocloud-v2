@@ -18,20 +18,12 @@ package dev.httpmarco.polocloud.base.templates;
 
 import dev.httpmarco.osgan.files.Files;
 import dev.httpmarco.osgan.files.json.JsonDocument;
-import dev.httpmarco.polocloud.api.CloudAPI;
-import dev.httpmarco.polocloud.base.CloudBase;
 import dev.httpmarco.polocloud.base.common.PropertiesPoolSerializer;
-import dev.httpmarco.polocloud.base.groups.CloudGroupPlatformService;
-import dev.httpmarco.polocloud.base.groups.CloudServiceGroupProvider;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
-import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 @Getter
@@ -64,6 +56,22 @@ public final class TemplatesService {
         templates().add(template);
         this.document.updateDocument();
 
+        return true;
+    }
+
+    public boolean deleteTemplate(String name) {
+        if (!isTemplate(name)) {
+            return false;
+        }
+
+        for (var file : TEMPLATES.toFile().listFiles()) {
+            if (file.getName().equalsIgnoreCase(name)) {
+                file.delete();
+                this.templates().remove(name);
+                this.document.value().templates().remove(name);
+                this.document.updateDocument();
+            }
+        }
         return true;
     }
 

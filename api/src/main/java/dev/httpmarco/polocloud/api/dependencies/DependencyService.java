@@ -45,5 +45,7 @@ public final class DependencyService {
         Dependency.load("io.netty", "netty5-buffer", "5.0.0.Alpha5");
         Dependency.load("io.netty", "netty5-transport-classes-epoll", "5.0.0.Alpha5");
         Dependency.load("com.google.code.gson", "gson", "2.10.1");
+        Dependency.load("net.kyori", "adventure-text-minimessage", "4.17.0");
+        Dependency.load("net.kyori", "adventure-platform-bungeecord", "4.3.2");
     }
 }

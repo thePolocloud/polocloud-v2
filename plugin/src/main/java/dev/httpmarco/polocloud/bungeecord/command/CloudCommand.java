@@ -27,22 +27,25 @@ import java.util.List;
 
 public class CloudCommand extends Command {
 
+    // TODO: private final BungeeAudiences adventure;
+    private final String PREFIX;
+
     public CloudCommand() {
         super("cloud");
+      //  this.adventure = BungeeCordPlatform.instance().adventure();
+        this.PREFIX = "<color:#00feed>PoloCloud</color> <dark_gray>»</dark_gray> ";
     }
 
     // todo: make Messages! -> Adding Minimessages
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (!(sender instanceof ProxiedPlayer)) {
-            sender.sendMessage("Cloud | Sei ein Spieler");
+        if (!(sender instanceof ProxiedPlayer player)) {
+            sender.sendMessage("PoloCloud » you are not a Player!");
             return;
         }
 
-        final ProxiedPlayer player = (ProxiedPlayer) sender;
-
-        if (!(sender.hasPermission("cloud.command"))) {
-            sender.sendMessage("§cYou dont have the Permissions");
+        if (!(player.hasPermission("cloud.command"))) {
+            this.sendMessage(player, this.PREFIX + "<red>You don't have the Permission for that!</red>");
             return;
         }
 
@@ -61,14 +64,19 @@ public class CloudCommand extends Command {
         this.sendUsage(player);
     }
 
-    private void sendUsage(ProxiedPlayer player) {
-        player.sendMessage("Cloud | /cloud group list - Hole alle Gruppen ab");
-        player.sendMessage("Cloud | /cloud group <GroupName> - Info aller Gruppen");
-        player.sendMessage("Cloud | /cloud group shutdown <GroupName> - Stoppe alle Server der Gruppe");
+    private void sendMessage(ProxiedPlayer player, String message) {
+        player.sendMessage(message);
+       // adventure.player(player).sendMessage(MiniMessage.miniMessage().deserialize(message));
+    }
 
-        player.sendMessage("Cloud | /cloud service list - Hole alle service ab");
-        player.sendMessage("Cloud | /cloud service <ServiceName> - Info aller services");
-        player.sendMessage("Cloud | /cloud service shutdown <ServiceName> - Stoppe den service");
+    private void sendUsage(ProxiedPlayer player) {
+        this.sendMessage(player, this.PREFIX + "<gray>/cloud group list - list all groups</gray>");
+        this.sendMessage(player, this.PREFIX + "<gray>/cloud group <groupName> - show info about group</gray>");
+        this.sendMessage(player, this.PREFIX + "<gray>/cloud group shutdown <groupName> - shutdown all server by a group</gray>");
+
+        this.sendMessage(player, this.PREFIX + "<gray>/cloud service list - list all services</gray>");
+        this.sendMessage(player, this.PREFIX + "<gray>/cloud service <serviceName> - show info about service</gray>");
+        this.sendMessage(player, this.PREFIX + "<gray>/cloud service shutdown <serviceName> - shutdown a service</gray>");
         // TODO: Adding copy Command for Copy the Server into the Template!
     }
 

@@ -18,6 +18,12 @@ dependencies {
     implementation(project(":api"))
     implementation(project(":instance"))
     implementation(libs.osgan.netty)
+    /*
+    api(libs.minimessage)
+    implementation(libs.minimessage)
+    implementation(libs.bungeeminimessage)
+    // TODO:
+     */
 
     implementation(libs.spigot)
     implementation(libs.bungeecord)

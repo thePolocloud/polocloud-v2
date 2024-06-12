@@ -1,6 +1,8 @@
 [versions]
 lombok = "1.18.32"
 osgan = "1.2.12-SNAPSHOT"
+minimessage = "4.17.0"
+bungeeminimessage = "4.3.2"
 
 gson = "2.11.0"
 yaml = "2.2"
@@ -22,6 +24,9 @@ lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" 
 osgan-utils = { group = "dev.httpmarco", name = "osgan-utils", version.ref = "osgan" }
 osgan-files = { group = "dev.httpmarco", name = "osgan-files", version.ref = "osgan" }
 osgan-netty = { group = "dev.httpmarco", name = "osgan-netty", version.ref = "osgan" }
+
+minimessage = { group = "net.kyori", name = "adventure-text-minimessage", version.ref = "minimessage" }
+bungeeminimessage = { group = "net.kyori", name = "adventure-platform-bungeecord", version.ref = "bungeeminimessage" }
 
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 yaml = { group = "org.yaml", name = "snakeyaml", version.ref = "yaml" }

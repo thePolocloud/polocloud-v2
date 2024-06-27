@@ -4,7 +4,7 @@ annotations = "24.1.0"
 osgan = "1.2.12-SNAPSHOT"
 
 gson = "2.11.0"
-toml = "3.7.2"
+toml = "3.7.4"
 
 jansi = "2.4.1"
 jline = "3.26.2"

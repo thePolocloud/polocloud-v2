@@ -6,7 +6,6 @@ import dev.httpmarco.polocloud.api.CloudAPI;
 import dev.httpmarco.polocloud.api.module.CloudModule;
 import dev.httpmarco.polocloud.api.module.LoadedModule;
 import dev.httpmarco.polocloud.api.module.ModuleMetadata;
-import dev.httpmarco.polocloud.base.CloudBase;
 import dev.httpmarco.polocloud.runner.RunnerBootstrap;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -59,32 +58,31 @@ public class ModuleManager {
     private void loadModuleFileContent(File file) {
         var metadata = loadModuleMetadata(file);
         var cloudModule = loadModule(file, metadata.main());
-        if (cloudModule != null) {
-            var classLoader = (URLClassLoader) cloudModule.getClass().getClassLoader();
-            var loadedModule = new LoadedModule(cloudModule, classLoader, metadata);
-            loadedModules.add(loadedModule);
-            cloudModule.onEnable();
-        }
+        var classLoader = (URLClassLoader) cloudModule.getClass().getClassLoader();
+        var loadedModule = new LoadedModule(cloudModule, classLoader, metadata);
+        loadedModules.add(loadedModule);
+        cloudModule.onEnable();
     }
 
     @SneakyThrows
     private ModuleMetadata loadModuleMetadata(File file) {
-        var jarFile = new JarFile(file);
-        var reader = new InputStreamReader(jarFile.getInputStream(jarFile.getJarEntry("module.json")));
-        return GSON.fromJson(reader, ModuleMetadata.class);
+        try (var jarFile = new JarFile(file)) {
+            var reader = new InputStreamReader(jarFile.getInputStream(jarFile.getJarEntry("module.json")));
+            return GSON.fromJson(reader, ModuleMetadata.class);
+        }
     }
 
     @SneakyThrows
     private CloudModule loadModule(File file, String mainClass) {
         var jarUrl = file.toURI().toURL();
-        var classLoader = new URLClassLoader(new URL[]{jarUrl}, this.parentClassLoader);
+        try (var classLoader = new URLClassLoader(new URL[]{jarUrl}, this.parentClassLoader)) {
+            Class<?> clazz = classLoader.loadClass(mainClass);
+            if (!CloudModule.class.isAssignableFrom(clazz)) {
+                throw new IllegalArgumentException("Class " + mainClass + " does not implement CloudModule");
+            }
 
-        Class<?> clazz = classLoader.loadClass(mainClass);
-        if (!CloudModule.class.isAssignableFrom(clazz)) {
-            throw new IllegalArgumentException("Class " + mainClass + " does not implement CloudModule");
+            return (CloudModule) clazz.getDeclaredConstructor().newInstance();
         }
-
-        return (CloudModule) clazz.getDeclaredConstructor().newInstance();
     }
 
     @SneakyThrows

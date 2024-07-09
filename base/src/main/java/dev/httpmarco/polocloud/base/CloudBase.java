@@ -99,9 +99,7 @@ public final class CloudBase extends CloudAPI {
         this.playerProvider = new CloudPlayerProviderImpl();
         (this.moduleManager = new ModuleManager()).loadAllUnloadedModules();
 
-        this.moduleManager.getLoadedModules().forEach(module -> {
-            logger().info("Loaded module: " + module.metadata().name() + " by " + module.metadata().author());
-        });
+        this.moduleManager.getLoadedModules().forEach(module -> logger().info("Loaded module: " + module.metadata().name() + " by " + module.metadata().author()));
 
         logger().success("Successfully started up&2! (&1Took " + (System.currentTimeMillis() - Long.parseLong(System.getProperty("startup"))) + "ms&2)");
 

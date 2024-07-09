@@ -31,6 +31,7 @@ import dev.httpmarco.polocloud.base.events.GlobalEventNode;
 import dev.httpmarco.polocloud.base.groups.CloudGroupProvider;
 import dev.httpmarco.polocloud.base.logging.FileLoggerHandler;
 import dev.httpmarco.polocloud.base.logging.LoggerOutPutStream;
+import dev.httpmarco.polocloud.base.module.ModuleManager;
 import dev.httpmarco.polocloud.base.node.CloudNodeService;
 import dev.httpmarco.polocloud.base.node.LocalNode;
 import dev.httpmarco.polocloud.base.player.CloudPlayerProviderImpl;
@@ -57,6 +58,7 @@ public final class CloudBase extends CloudAPI {
     private final CloudPlayerProvider playerProvider;
     private final CloudConfiguration cloudConfiguration = OsganFile.define("config.json").asDocument(new CloudConfiguration(), new Pair<>(PropertyPool.class, new PropertiesPoolSerializer())).content();
     private final GlobalEventNode globalEventNode;
+    private final ModuleManager moduleManager;
 
     private boolean running = true;
 
@@ -95,6 +97,11 @@ public final class CloudBase extends CloudAPI {
         this.templatesService = new TemplatesService();
         this.serviceProvider = new CloudServiceProviderImpl();
         this.playerProvider = new CloudPlayerProviderImpl();
+        (this.moduleManager = new ModuleManager()).loadAllUnloadedModules();
+
+        this.moduleManager.getLoadedModules().forEach(module -> {
+            logger().info("Loaded module: " + module.metadata().name() + " by " + module.metadata().author());
+        });
 
         logger().success("Successfully started up&2! (&1Took " + (System.currentTimeMillis() - Long.parseLong(System.getProperty("startup"))) + "ms&2)");
 
@@ -115,6 +122,7 @@ public final class CloudBase extends CloudAPI {
         }
 
         this.nodeService.localNode().close();
+        this.moduleManager.unloadAllModules();
 
         logger().info("Cloud successfully stopped!");
         this.loggerFactory().close();

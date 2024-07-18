@@ -53,14 +53,16 @@ public class RestAPI implements CloudModule {
     }
 
     private void startUpJavalin() {
-        this.javalin = Javalin.create(config -> {
+        this.javalin = Javalin.createAndStart(config -> {
+            config.jetty.defaultHost = this.config.javalinConfiguration().hostname();
+            config.jetty.defaultPort = this.config.javalinConfiguration().port();
             config.showJavalinBanner = false;
 
             config.pvt.javaLangErrorHandler(((httpServletResponse, error) -> {
                 httpServletResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.getCode());
                 error.printStackTrace();
             }));
-        }).start(this.config.javalinConfiguration().port());
+        });
 
         this.javalin.exception(Exception.class, (e, ctx) -> {
             ctx.status(500);

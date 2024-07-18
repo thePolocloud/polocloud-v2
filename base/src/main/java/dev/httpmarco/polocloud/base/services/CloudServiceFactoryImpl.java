@@ -48,7 +48,7 @@ public final class CloudServiceFactoryImpl implements CloudServiceFactory {
     @SneakyThrows
     public CloudServiceFactoryImpl() {
         if (Files.exists(RUNNING_FOLDER)) {
-            FileUtils.deleteDirectory(RUNNING_FOLDER.toFile());
+            FileUtils.forceDelete(RUNNING_FOLDER.toFile());
             Files.createDirectory(RUNNING_FOLDER);
         }
     }

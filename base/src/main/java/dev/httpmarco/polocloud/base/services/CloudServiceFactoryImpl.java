@@ -119,7 +119,7 @@ public final class CloudServiceFactoryImpl implements CloudServiceFactory {
         }
 
         localCloudService.state(ServiceState.STOPPING);
-        
+
         new Thread(() -> {
             if (localCloudService.process() != null && localCloudService.process().toHandle().isAlive()) {
                 localCloudService.execute(localCloudService.group().platform().proxy() ? "end" : "stop");

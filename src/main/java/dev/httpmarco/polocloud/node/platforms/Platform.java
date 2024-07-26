@@ -27,9 +27,8 @@ import java.util.Set;
 @AllArgsConstructor
 public final class Platform {
 
-    private String platform;
-    private PlatformType type;
-    private Set<PlatformAddition> additions;
-    private Set<PlatformVersion> versions;
+    private final String platform;
+    private final PlatformType type;
+    private final Set<PlatformVersion> versions;
 
 }

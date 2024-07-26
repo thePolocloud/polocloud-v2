@@ -11,7 +11,6 @@ public class NodeLauncher {
     public static void main(String[] args) {
 
         Thread.currentThread().setUncaughtExceptionHandler((t, e) -> {
-            System.out.println("pololololololo");
             new RuntimeException(e);
         });
 
@@ -24,8 +23,13 @@ public class NodeLauncher {
             for (var errorLine : exception.getMessage().split("\\n", -1)) {
                 System.err.println(errorLine);
             }
+
             for (StackTraceElement traceElement : exception.getStackTrace()) {
                 System.err.println(traceElement);
+            }
+
+            for (StackTraceElement throwable : exception.getCause().getStackTrace()) {
+                System.err.println(throwable);
             }
         }
     }

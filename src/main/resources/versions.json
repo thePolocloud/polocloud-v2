@@ -4,12 +4,11 @@
     {
       "name": "paper",
       "type": "SERVER",
-      "additions": [],
       "versions": [
         {
           "version": "1.21",
-          "build": 109,
-          "downloadLink": "https://api.papermc.io/v2/projects/paper/versions/1.21/builds/%build%/downloads/paper-1.21-%build%.jar"
+          "checksum": "76c606131494125f064dc2ed401b946d4a12e08bf0ccdbf32edaa08b6633c30a",
+          "downloadLink": "https://api.papermc.io/v2/projects/paper/versions/1.21/builds/109/downloads/paper-1.21-109.jar"
         }
       ]
     }

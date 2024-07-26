@@ -19,5 +19,6 @@ public final class Node {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> NodeShutdown.nodeShutdown(terminal, cluster)));
 
         log.info("Cluster node boot successfully &8(&7Took {}ms&8)", System.currentTimeMillis() - Long.parseLong(System.getProperty("startup")));
+        terminal.allowInput();
     }
 }

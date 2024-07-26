@@ -3,7 +3,7 @@ package dev.httpmarco.polocloud.node.platforms;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.Singleton;
-import dev.httpmarco.polocloud.node.platforms.util.PlatformVersionJsonTypeAdapter;
+import dev.httpmarco.polocloud.node.platforms.tasks.PlatformDownloadTask;
 import dev.httpmarco.polocloud.node.util.JsonUtils;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -22,13 +22,7 @@ import java.util.Objects;
 @Singleton
 public final class PlatformService {
 
-    private static final Gson PLATFORM_JSON = new GsonBuilder().setPrettyPrinting()
-            .registerTypeAdapter(PlatformVersion.class, new PlatformVersionJsonTypeAdapter())
-            .registerTypeHierarchyAdapter(PlatformVersion.class, new PlatformVersionJsonTypeAdapter())
-            .create();
-
     private final Platform[] platforms;
-    private final PlatformAdditionIdPool additionPool = new PlatformAdditionIdPool();
 
     @SneakyThrows
     public PlatformService() {
@@ -46,11 +40,13 @@ public final class PlatformService {
 
         this.platforms = this.readLocalPlatformConfig(versionFile).platforms();
         log.info("Loading {} cluster platforms with {} versions&8.", platforms.length, versionsAmount());
+
+        PlatformDownloadTask.download(this.platforms[0], this.platforms[0].versions().stream().findFirst().get());
     }
 
     @SneakyThrows
     private PlatformConfig readLocalPlatformConfig(Path versionFile) {
-        return PLATFORM_JSON.fromJson(Files.readString(versionFile), PlatformConfig.class);
+        return JsonUtils.GSON.fromJson(Files.readString(versionFile), PlatformConfig.class);
     }
 
     @SneakyThrows

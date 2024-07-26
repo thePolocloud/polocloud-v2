@@ -72,6 +72,9 @@ public final class JLineTerminal implements Closeable {
 
         clear();
         TerminalHeader.print(this, config);
+    }
+
+    public void allowInput() {
         commandReadingThread().start();
     }
 

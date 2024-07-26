@@ -20,7 +20,7 @@ public class Downloader {
 
     private final ExecutorService DOWNLOAD_TASK = Executors.newFixedThreadPool(4);
 
-    public CommunicationFuture<File> download(String link, Path path) {
+    public CommunicationFuture<File> downloadAsync(String link, Path path) {
         var future = new CommunicationFuture<File>();
 
         DOWNLOAD_TASK.submit(() -> {
@@ -33,6 +33,12 @@ public class Downloader {
         });
 
         return future;
+    }
+
+    @SneakyThrows
+    public File download(String link, Path path) {
+        Files.copy(urlStream(link), path);
+        return path.toFile();
     }
 
     public String directJsonDownloader(String link) {

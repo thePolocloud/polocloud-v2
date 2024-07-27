@@ -15,12 +15,7 @@ public final class BooleanArgument extends CommandArgument<Boolean> {
 
     @Override
     public boolean predication(@NotNull String rawInput) {
-        try {
-            var ignore = Boolean.parseBoolean(rawInput);
-            return true;
-        } catch (Exception ignore) {
-            return false;
-        }
+        return rawInput.equalsIgnoreCase("true") || rawInput.equalsIgnoreCase("false");
     }
 
     @Contract(pure = true)

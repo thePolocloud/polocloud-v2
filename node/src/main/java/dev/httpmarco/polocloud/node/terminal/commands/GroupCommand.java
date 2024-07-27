@@ -51,6 +51,7 @@ public final class GroupCommand extends Command {
                 platformVersionArgument,
                 minMemoryArgument,
                 maxMemoryArgument,
+                staticService,
                 minOnlineArgument,
                 maxOnlineArgument
         );
@@ -61,7 +62,13 @@ public final class GroupCommand extends Command {
         }), CommandArgumentType.Keyword("delete"), groupArgument);
 
         syntax(context -> {
-            // todo info
+            var group = context.arg(groupArgument);
+            log.info("Name&8: &b{}", group.name());
+            log.info("Platform&8: &b{}-{}", group.platform().platform(), group.platform().version());
+            log.info("Minimum memory&8: &b{}", group.minMemory());
+            log.info("Maximum memory&8: &b{}", group.maxMemory());
+            log.info("Minimum online services&8: &b{}", group.minOnlineServerInstances());
+            log.info("Maximum online services&8: &b{}", group.maxOnlineServerInstances());
         }, groupArgument, CommandArgumentType.Keyword("info"));
 
         syntax(context -> {

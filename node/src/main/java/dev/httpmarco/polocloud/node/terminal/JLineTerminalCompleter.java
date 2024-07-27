@@ -56,9 +56,11 @@ public final class JLineTerminalCompleter implements Completer {
         }
 
         for (int i = 0; i < argumentIndex; i++) {
+
             var expectedArgument = syntaxCommand.arguments()[i];
             var enteredArgument = parsedLine.words().get(i + 1).replace("<", "").replace(">", "");
-            if (!expectedArgument.key().equals(enteredArgument) && !expectedArgument.defaultArgs().contains(enteredArgument)) {
+
+            if ((!expectedArgument.key().equals(enteredArgument) && !expectedArgument.defaultArgs().contains(enteredArgument)) && !expectedArgument.predication(enteredArgument)) {
                 return false;
             }
         }

@@ -38,8 +38,8 @@ public final class GroupCommand extends Command {
         }, groupArgument, CommandArgumentType.Keyword("shutdown"));
 
 
-        var editKey = CommandArgumentType.Keyword("key");
-        var editValue = CommandArgumentType.Keyword("value");
+        var editKey = CommandArgumentType.Keyword("key"); //TODO <> hinzufügen
+        var editValue = CommandArgumentType.Keyword("value"); //TODO <> hinzufügen
 
         syntax(context -> {
 

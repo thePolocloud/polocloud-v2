@@ -30,36 +30,58 @@ public final class JLineTerminalCompleter implements Completer {
                     list.add(new Candidate(command.name()));
                 }
 
-                Arrays.stream(command.aliases()).filter(it -> it.startsWith(parsedLine.word())).forEach(s -> list.add(new Candidate(s)));
+                Arrays.stream(command.aliases())
+                        .filter(it -> it.startsWith(parsedLine.word()))
+                        .forEach(alias -> list.add(new Candidate(alias)));
             }
             return;
         }
 
         var commandName = parsedLine.words().get(0);
-
         for (var command : commandService.commandsByName(commandName)) {
 
             for (SyntaxCommand syntaxCommand : command.syntaxCommands) {
 
-                if (syntaxCommand.arguments().length < parsedLine.wordIndex()) {
-                    continue;
-                }
-
-                for (int i = 0; i < syntaxCommand.arguments().length; i++) {
-                    if ((i + 1) != parsedLine.wordIndex()) {
-                        continue;
-                    }
-
-                    var argument = syntaxCommand.arguments()[i];
-
-                    if (argument.defaultArgs().isEmpty()) {
-                        list.add(new Candidate("<" + argument.key() + ">"));
-                        continue;
-                    }
-
-                    list.addAll(argument.defaultArgs().stream().map(Candidate::new).toList());
+                if (isMatchingSyntax(parsedLine, syntaxCommand)) {
+                    addSuggestions(parsedLine, syntaxCommand, list);
                 }
             }
+        }
+    }
+
+    private boolean isMatchingSyntax(ParsedLine parsedLine, SyntaxCommand syntaxCommand) {
+        var argumentIndex = parsedLine.wordIndex() - 1;
+        if (argumentIndex >= syntaxCommand.arguments().length) {
+            return false;
+        }
+
+        for (int i = 0; i < argumentIndex; i++) {
+            var expectedArgument = syntaxCommand.arguments()[i];
+            var enteredArgument = parsedLine.words().get(i + 1).replace("<", "").replace(">", "");
+            if (!expectedArgument.key().equals(enteredArgument) && !expectedArgument.defaultArgs().contains(enteredArgument)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void addSuggestions(ParsedLine parsedLine, SyntaxCommand syntaxCommand, List<Candidate> list) {
+        var argumentIndex = parsedLine.wordIndex() - 1;
+        if (argumentIndex >= syntaxCommand.arguments().length) {
+            return;
+        }
+
+        var argument = syntaxCommand.arguments()[argumentIndex];
+
+        if (argument.defaultArgs().isEmpty()) {
+            String candidateValue = "<" + argument.key() + ">";
+            if (list.stream().noneMatch(candidate -> candidate.value().equals(candidateValue))) {
+                list.add(new Candidate(candidateValue));
+            }
+        } else {
+            argument.defaultArgs().stream()
+                    .filter(defaultArg -> list.stream().noneMatch(candidate -> candidate.value().equals(defaultArg)))
+                    .forEach(defaultArg -> list.add(new Candidate(defaultArg)));
         }
     }
 }

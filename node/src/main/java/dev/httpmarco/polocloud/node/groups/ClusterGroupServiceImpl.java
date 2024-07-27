@@ -2,7 +2,6 @@ package dev.httpmarco.polocloud.node.groups;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import dev.httpmarco.osgan.networking.CommunicationProperty;
 import dev.httpmarco.polocloud.api.Named;
 import dev.httpmarco.polocloud.api.groups.ClusterGroup;
 import dev.httpmarco.polocloud.api.groups.ClusterGroupService;
@@ -39,7 +38,7 @@ public final class ClusterGroupServiceImpl extends ClusterGroupService {
         this.clusterService = clusterService;
 
         clusterService.localNode().transmit().listen(GroupCreatePacket.class, (transmit, packet) -> ClusterGroupFactory.createLocalStorageGroup(packet, this));
-        clusterService.localNode().transmit().listen(GroupDeletePacket.class, (transmit, packet) -> ClusterGroupFactory.deleteLocalStorageGroup(packet.name()));
+        clusterService.localNode().transmit().listen(GroupDeletePacket.class, (transmit, packet) -> ClusterGroupFactory.deleteLocalStorageGroup(packet.name(), this));
 
         clusterService.localNode().transmit().responder(GroupCreationRequest.TAG, property -> GroupCreationResponder.handle(this, clusterService, property));
         clusterService.localNode().transmit().responder(GroupDeletionRequest.TAG, property -> GroupDeletionResponder.handle(this, clusterService, property));
@@ -52,8 +51,13 @@ public final class ClusterGroupServiceImpl extends ClusterGroupService {
     }
 
     @Override
-    public boolean exists(String group) {
-        return this.groups.stream().anyMatch(it -> it.name().equalsIgnoreCase(group));
+    public CompletableFuture<Set<ClusterGroup>> groupsAsync() {
+        return CompletableFuture.completedFuture(groups);
+    }
+
+    @Override
+    public CompletableFuture<Boolean> existsAsync(String group) {
+        return CompletableFuture.completedFuture(this.groups.stream().anyMatch(it -> it.name().equalsIgnoreCase(group)));
     }
 
     @Contract(pure = true)

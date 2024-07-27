@@ -12,9 +12,19 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class ClusterGroupService {
 
-    public abstract Set<ClusterGroup> groups();
+    public abstract CompletableFuture<Set<ClusterGroup>> groupsAsync();
 
-    public abstract boolean exists(String group);
+    @SneakyThrows
+    public Set<ClusterGroup> groups() {
+        return groupsAsync().get(5, TimeUnit.SECONDS);
+    }
+
+    public abstract CompletableFuture<Boolean> existsAsync(String group);
+
+    @SneakyThrows
+    public boolean exists(String group) {
+        return this.existsAsync(group).get(5, TimeUnit.SECONDS);
+    }
 
     public abstract CompletableFuture<Optional<String>> deleteAsync(String group);
 

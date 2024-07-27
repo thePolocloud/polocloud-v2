@@ -6,7 +6,7 @@
 - [ ] Tab complete von key und values manchmal echt komisch
 
 ## Aktuelles component was umgebaut wird und dafuer die todos: 
-- [ ] Group edit command 
-- [ ] Group delete 
+- [ ] Group edit command
 - [ ] Group Async methods
 - [ ] group info command not work 
+- [ ] group default command info is broke 

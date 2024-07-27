@@ -49,8 +49,13 @@ public final class ClusterGroupFactory {
         clusterGroupService.groups().add(group);
     }
 
-    public void deleteLocalStorageGroup(String name) {
-        // todo
+    @SneakyThrows
+    public void deleteLocalStorageGroup(String name, @NotNull ClusterGroupService clusterGroupService) {
+        var groupFile = GROUP_DIR.resolve(name + ".json");
+        Files.deleteIfExists(groupFile);
+
+        //todo wait for service shutdown
+        clusterGroupService.groups().removeIf(group -> group.name().equalsIgnoreCase(name));
     }
 
     @SneakyThrows

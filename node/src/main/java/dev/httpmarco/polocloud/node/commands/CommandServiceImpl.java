@@ -29,7 +29,7 @@ public final class CommandServiceImpl implements CommandService {
     @Inject
     public CommandServiceImpl(JLineTerminal terminal, ClusterService clusterService, ClusterGroupService groupService, PlatformService platformService) {
         registerCommand(new ShutdownCommand(terminal, clusterService));
-        registerCommand(new GroupCommand(groupService, platformService));
+        registerCommand(new GroupCommand(clusterService, groupService, platformService));
         registerCommand(new ClearCommand(terminal));
     }
 

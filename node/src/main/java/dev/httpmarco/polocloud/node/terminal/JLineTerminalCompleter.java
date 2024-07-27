@@ -49,7 +49,7 @@ public final class JLineTerminalCompleter implements Completer {
         }
     }
 
-    private boolean isMatchingSyntax(ParsedLine parsedLine, SyntaxCommand syntaxCommand) {
+    private boolean isMatchingSyntax(@NotNull ParsedLine parsedLine, @NotNull SyntaxCommand syntaxCommand) {
         var argumentIndex = parsedLine.wordIndex() - 1;
         if (argumentIndex >= syntaxCommand.arguments().length) {
             return false;
@@ -67,7 +67,7 @@ public final class JLineTerminalCompleter implements Completer {
         return true;
     }
 
-    private void addSuggestions(ParsedLine parsedLine, SyntaxCommand syntaxCommand, List<Candidate> list) {
+    private void addSuggestions(@NotNull ParsedLine parsedLine, @NotNull SyntaxCommand syntaxCommand, List<Candidate> list) {
         var argumentIndex = parsedLine.wordIndex() - 1;
         if (argumentIndex >= syntaxCommand.arguments().length) {
             return;

@@ -1,6 +1,7 @@
 package dev.httpmarco.polocloud.node.terminal.commands;
 
 import dev.httpmarco.polocloud.api.platforms.PlatformGroupDisplay;
+import dev.httpmarco.polocloud.node.cluster.ClusterService;
 import dev.httpmarco.polocloud.node.commands.Command;
 import dev.httpmarco.polocloud.node.commands.CommandArgumentType;
 import dev.httpmarco.polocloud.api.groups.ClusterGroupService;
@@ -10,7 +11,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public final class GroupCommand extends Command {
 
-    public GroupCommand(ClusterGroupService groupService, PlatformService platformService) {
+    public GroupCommand(ClusterService clusterService, ClusterGroupService groupService, PlatformService platformService) {
         super("group");
 
         // argument for group name
@@ -31,7 +32,7 @@ public final class GroupCommand extends Command {
         var staticService = CommandArgumentType.Boolean("staticService");
 
         syntax(context -> groupService.create(context.arg(groupIdArgument),
-                        new String[0],
+                        new String[]{clusterService.localNode().data().name()},
                         new PlatformGroupDisplay(context.arg(platformArgument).platform(), context.arg(platformVersionArgument).version()),
                         context.arg(minMemoryArgument),
                         context.arg(maxMemoryArgument),

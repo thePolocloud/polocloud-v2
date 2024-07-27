@@ -23,7 +23,7 @@ public final class ClusterGroupJsonTypeAdapter implements JsonSerializer<Cluster
         jsonObject.addProperty("name", group.name());
 
         if (group.node().length == 1) {
-            jsonObject.addProperty("nodes", group.node()[1]);
+            jsonObject.addProperty("nodes", group.node()[0]);
         } else {
             var nodeArray = new JsonArray();
 
@@ -40,6 +40,8 @@ public final class ClusterGroupJsonTypeAdapter implements JsonSerializer<Cluster
 
         jsonObject.addProperty("minOnlineServerInstances", group.minOnlineServerInstances());
         jsonObject.addProperty("maxOnlineServerInstances", group.maxOnlineServerInstances());
+
+        jsonObject.addProperty("staticService", group.staticService());
 
         if (group instanceof FallbackClusterGroup) {
             jsonObject.addProperty("fallback", true);

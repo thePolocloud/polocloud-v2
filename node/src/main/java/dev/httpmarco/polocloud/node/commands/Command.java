@@ -15,7 +15,7 @@ public abstract class Command {
     private final String[] aliases;
 
     public @Nullable CommandExecution defaultExecution;
-    public final List<SyntaxCommand> syntaxCommands = new ArrayList<>();
+    public final List<CommandSyntax> commandSyntaxes = new ArrayList<>();
 
     public Command(String name, String... aliases) {
         this.name = name;
@@ -23,11 +23,11 @@ public abstract class Command {
     }
 
     public void syntax(CommandExecution execution, CommandArgument<?>... arguments) {
-        this.syntaxCommands.add(new SyntaxCommand(execution, arguments, null));
+        this.commandSyntaxes.add(new CommandSyntax(execution, arguments, null));
     }
 
     public void syntax(CommandExecution execution, String description, CommandArgument<?>... arguments) {
-        this.syntaxCommands.add(new SyntaxCommand(execution, arguments, description));
+        this.commandSyntaxes.add(new CommandSyntax(execution, arguments, description));
     }
 
     public void defaultExecution(CommandExecution execution) {
@@ -35,7 +35,7 @@ public abstract class Command {
     }
 
     public boolean hasSyntaxCommands() {
-        return !this.syntaxCommands.isEmpty();
+        return !this.commandSyntaxes.isEmpty();
     }
 
     @Override

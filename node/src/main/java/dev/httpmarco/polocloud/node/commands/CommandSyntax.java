@@ -10,7 +10,7 @@ import java.util.Arrays;
 @Getter
 @Accessors(fluent = true)
 @AllArgsConstructor
-public class SyntaxCommand {
+public class CommandSyntax {
 
     private final CommandExecution execution;
     private final CommandArgument<?>[] arguments;

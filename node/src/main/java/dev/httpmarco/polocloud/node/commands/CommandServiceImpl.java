@@ -51,6 +51,6 @@ public final class CommandServiceImpl implements CommandService {
 
     @Override
     public void call(String commandId, String[] args) {
-        CommandSerializer.serializer(this, commandId, args);
+        CommandParser.serializer(this, commandId, args);
     }
 }

@@ -15,7 +15,7 @@ public final class CommandContext {
         return (T) contexts.get(argument);
     }
 
-    public <T> void append(CommandArgument<?> argument, Object value) {
+    public void append(CommandArgument<?> argument, Object value) {
         this.contexts.put(argument, value);
     }
 }

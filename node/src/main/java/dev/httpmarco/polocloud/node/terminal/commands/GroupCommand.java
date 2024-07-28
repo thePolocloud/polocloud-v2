@@ -52,7 +52,7 @@ public final class GroupCommand extends Command {
                 maxOnlineArgument
         );
 
-        syntax(context -> groupService.delete(context.arg(groupArgument).name()).ifPresentOrElse(s -> log.warn("Cannot delete group: {}", s), () -> log.info("Successfully delete group {} in cluster!", context.arg(groupArgument).name())), CommandArgumentType.Keyword("delete"), groupArgument);
+        syntax(context -> groupService.delete(context.arg(groupArgument).name()).ifPresentOrElse(s -> log.warn("Cannot delete group: {}", s), () -> log.info("Successfully delete group {} in cluster!", context.arg(groupArgument).name())), groupArgument, CommandArgumentType.Keyword("delete"));
 
         syntax(context -> {
             var group = context.arg(groupArgument);

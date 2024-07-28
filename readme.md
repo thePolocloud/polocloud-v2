@@ -7,6 +7,4 @@
 
 ## Aktuelles component was umgebaut wird und dafuer die todos: 
 - [ ] Group edit command
-- [ ] Group Async methods
-- [ ] group info command not work 
 - [ ] group default command info is broke 

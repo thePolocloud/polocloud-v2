@@ -27,7 +27,7 @@ public final class BooleanArgument extends CommandArgument<Boolean> {
     @Contract(pure = true)
     @Override
     public @Unmodifiable List<String> defaultArgs() {
-        return List.of();
+        return List.of("true", "false");
     }
 
     @Contract(pure = true)

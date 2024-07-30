@@ -1,6 +1,7 @@
 package dev.httpmarco.polocloud.node.commands.type;
 
 import dev.httpmarco.polocloud.node.commands.CommandArgument;
+import dev.httpmarco.polocloud.node.commands.CommandBindArgument;
 import dev.httpmarco.polocloud.node.platforms.Platform;
 import dev.httpmarco.polocloud.node.platforms.PlatformService;
 import dev.httpmarco.polocloud.node.platforms.PlatformVersion;
@@ -11,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-public final class PlatformVersionArgument extends CommandArgument<PlatformVersion> {
+public final class PlatformVersionArgument extends CommandBindArgument<PlatformVersion, PlatformVersion> {
 
     private final PlatformService platformService;
 
@@ -26,15 +27,15 @@ public final class PlatformVersionArgument extends CommandArgument<PlatformVersi
         return true;
     }
 
-    @Override
-    public List<String> defaultArgs() {
-        return List.of("1.21");
-    }
-
     @Contract(pure = true)
     @Override
-    public @Nullable PlatformVersion buildResult(String input) {
+    public PlatformVersion buildResult(String input) {
         //todo
         return new PlatformVersion("1.21", null, null);
+    }
+
+    @Override
+    public List<String> defaultArgs(PlatformVersion previousBind, String rawInput) {
+        return List.of();
     }
 }

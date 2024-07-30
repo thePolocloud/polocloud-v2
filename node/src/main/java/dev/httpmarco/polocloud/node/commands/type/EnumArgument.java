@@ -28,6 +28,6 @@ public final  class EnumArgument<E extends Enum<E>> extends CommandArgument<E> {
 
     @Override
     public @NotNull E buildResult(String input) {
-        return Enum.valueOf(enumClass, input);
+        return Enum.valueOf(enumClass, input.toUpperCase());
     }
 }

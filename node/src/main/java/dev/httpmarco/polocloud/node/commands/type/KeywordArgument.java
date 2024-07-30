@@ -30,4 +30,9 @@ public final class KeywordArgument extends CommandArgument<String> {
     public @NotNull String buildResult(String input) {
         return "";
     }
+
+    @Override
+    public boolean predication(@NotNull String rawInput) {
+        return super.predication(rawInput) && rawInput.equalsIgnoreCase(key());
+    }
 }

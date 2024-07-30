@@ -40,7 +40,7 @@ public final class PlatformService {
         this.platforms = this.readLocalPlatformConfig(versionFile).platforms();
         log.info("Loading {} cluster platforms with {} versions&8.", platforms.length, versionsAmount());
 
-        PlatformDownloadTask.download(this.platforms[0], this.platforms[0].versions().stream().findFirst().get());
+       // PlatformDownloadTask.download(this.platforms[0], this.platforms[0].versions().stream().findFirst().get());
     }
 
     @SneakyThrows

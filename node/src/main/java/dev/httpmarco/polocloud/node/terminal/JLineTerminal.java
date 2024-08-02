@@ -2,8 +2,6 @@ package dev.httpmarco.polocloud.node.terminal;
 
 import dev.httpmarco.polocloud.api.Closeable;
 import dev.httpmarco.polocloud.node.NodeConfig;
-import dev.httpmarco.polocloud.node.cluster.ClusterService;
-import dev.httpmarco.polocloud.node.commands.CommandService;
 import dev.httpmarco.polocloud.node.logging.Log4j2Stream;
 import dev.httpmarco.polocloud.node.terminal.util.TerminalColorUtil;
 import dev.httpmarco.polocloud.node.terminal.util.TerminalHeader;

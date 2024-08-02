@@ -40,4 +40,9 @@ public class ClusterGroupImpl implements ClusterGroup {
     public String details() {
         return "platform&8=&7" + platform.details() + "&8, &7nodes&8=&7" + Arrays.toString(nodes) + ", &7minMemory&8=&7" + minMemory + "&8, &7maxMemory&8=&7" + maxMemory + "&8, &7static&8=&7" + staticService;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof ClusterGroup clusterGroup && clusterGroup.name().equals(name);
+    }
 }

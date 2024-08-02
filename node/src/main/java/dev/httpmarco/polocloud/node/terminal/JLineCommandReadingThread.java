@@ -3,14 +3,14 @@ package dev.httpmarco.polocloud.node.terminal;
 import dev.httpmarco.polocloud.node.Node;
 import dev.httpmarco.polocloud.node.NodeConfig;
 import dev.httpmarco.polocloud.node.NodeShutdown;
-import dev.httpmarco.polocloud.node.cluster.ClusterService;
-import dev.httpmarco.polocloud.node.commands.CommandService;
 import dev.httpmarco.polocloud.node.terminal.util.TerminalColorUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.UserInterruptException;
 
 import java.util.Arrays;
 
+@Slf4j
 public final class JLineCommandReadingThread extends Thread {
 
     private final NodeConfig localNodeImpl;
@@ -32,23 +32,26 @@ public final class JLineCommandReadingThread extends Thread {
         while (!isInterrupted()) {
             try {
                 try {
-                    var rawLine = terminal.lineReader().readLine(prompt);
+                    try {
+                        var rawLine = terminal.lineReader().readLine(prompt);
 
-                    if (rawLine.isEmpty()) {
-                        continue;
+                        if (rawLine.isEmpty()) {
+                            continue;
+                        }
+
+                        final var line = rawLine.split(" ");
+
+                        if (line.length > 0) {
+                            Node.instance().commandService().call(line[0], Arrays.copyOfRange(line, 1, line.length));
+                        }
+                    } catch (EndOfFileException ignore) {
                     }
-
-                    final var line = rawLine.split(" ");
-
-                    if (line.length > 0) {
-                        Node.instance().commandService().call(line[0], Arrays.copyOfRange(line, 1, line.length));
-                    }
-                } catch (EndOfFileException ignore) {
+                } catch (UserInterruptException exception) {
+                    NodeShutdown.nodeShutdown();
                 }
-            } catch (UserInterruptException exception) {
-                NodeShutdown.nodeShutdown();
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
-
         }
     }
 }

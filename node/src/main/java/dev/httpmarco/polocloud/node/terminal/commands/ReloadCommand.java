@@ -24,6 +24,7 @@ public final class ReloadCommand extends Command {
                 clusterService.headNode().transmit().sendPacket(new ClusterRequireReloadPacket());
             }
 
+
             log.info("Successfully reloading&8!");
         });
     }

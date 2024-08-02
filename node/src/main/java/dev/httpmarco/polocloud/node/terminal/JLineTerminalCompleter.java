@@ -2,7 +2,6 @@ package dev.httpmarco.polocloud.node.terminal;
 
 import dev.httpmarco.polocloud.node.Node;
 import dev.httpmarco.polocloud.node.commands.CommandContext;
-import dev.httpmarco.polocloud.node.commands.CommandService;
 import dev.httpmarco.polocloud.node.commands.CommandSyntax;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;

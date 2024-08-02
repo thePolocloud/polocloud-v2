@@ -1,11 +1,5 @@
 package dev.httpmarco.polocloud.node.commands;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import dev.httpmarco.polocloud.node.cluster.ClusterService;
-import dev.httpmarco.polocloud.api.groups.ClusterGroupService;
-import dev.httpmarco.polocloud.node.platforms.PlatformService;
-import dev.httpmarco.polocloud.node.terminal.JLineTerminal;
 import dev.httpmarco.polocloud.node.terminal.commands.ClearCommand;
 import dev.httpmarco.polocloud.node.terminal.commands.GroupCommand;
 import dev.httpmarco.polocloud.node.terminal.commands.ShutdownCommand;
@@ -20,17 +14,14 @@ import java.util.List;
 
 @Getter
 @Accessors(fluent = true)
-@Singleton
 public final class CommandServiceImpl implements CommandService {
 
     private final List<Command> commands = new ArrayList<>();
 
-    // todo search for a better inject way
-    @Inject
-    public CommandServiceImpl(JLineTerminal terminal, ClusterService clusterService, ClusterGroupService groupService, PlatformService platformService) {
-        registerCommand(new ShutdownCommand(terminal, clusterService));
-        registerCommand(new GroupCommand(clusterService, groupService, platformService));
-        registerCommand(new ClearCommand(terminal));
+    public CommandServiceImpl() {
+        registerCommand(new ShutdownCommand());
+        registerCommand(new GroupCommand());
+        registerCommand(new ClearCommand());
     }
 
     @Contract(pure = true)

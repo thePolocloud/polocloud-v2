@@ -1,6 +1,5 @@
 package dev.httpmarco.polocloud.node.commands.type;
 
-import com.google.inject.Inject;
 import dev.httpmarco.polocloud.api.Named;
 import dev.httpmarco.polocloud.api.groups.ClusterGroup;
 import dev.httpmarco.polocloud.node.commands.CommandArgument;
@@ -15,7 +14,6 @@ import java.util.Objects;
 
 public final class GroupArgument extends CommandArgument<ClusterGroup> {
 
-    @Inject
     private final ClusterGroupService groupService;
 
     public GroupArgument(String key, ClusterGroupService groupService) {

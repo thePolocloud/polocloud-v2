@@ -1,7 +1,5 @@
 package dev.httpmarco.polocloud.node.platforms;
 
-import com.google.inject.Singleton;
-import dev.httpmarco.polocloud.node.platforms.tasks.PlatformDownloadTask;
 import dev.httpmarco.polocloud.node.util.JsonUtils;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -18,7 +16,6 @@ import java.util.Objects;
 @Log4j2
 @Getter
 @Accessors(fluent = true)
-@Singleton
 public final class PlatformService {
 
     private final Platform[] platforms;

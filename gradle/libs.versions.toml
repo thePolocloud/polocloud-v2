@@ -2,7 +2,6 @@
 # utils
 lombok = "1.18.34"
 annotations = "24.1.0"
-guice = "7.0.0"
 
 # network
 osgan = "1.2.17-SNAPSHOT"
@@ -21,7 +20,6 @@ jline = "3.26.3"
 # utils
 lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
 annotations = { group = "org.jetbrains", name = "annotations", version.ref = "annotations" }
-guice = { group = "com.google.inject", name = "guice", version.ref = "guice" }
 
 # network
 osgan-netty = { group = "dev.httpmarco", name = "osgan-netty", version.ref = "osgan" }

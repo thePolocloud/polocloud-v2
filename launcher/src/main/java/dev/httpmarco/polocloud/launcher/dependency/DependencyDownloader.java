@@ -1,5 +1,6 @@
 package dev.httpmarco.polocloud.launcher.dependency;
 
+import dev.httpmarco.polocloud.launcher.PoloCloudLauncher;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
@@ -24,10 +25,17 @@ public class DependencyDownloader {
         var file = DOWNLOAD_DIR.resolve(dependency + ".jar").toFile();
 
         if (file.exists()) {
+            PoloCloudLauncher.CLASS_LOADER.addURL(file.toURI().toURL());
             return true;
         }
 
-        return DependencyHelper.download(dependency.downloadUrl(), file);
+        Boolean download = DependencyHelper.download(dependency.downloadUrl(), file);
+
+        if(download) {
+            PoloCloudLauncher.CLASS_LOADER.addURL(file.toURI().toURL());
+        }
+
+        return download;
     }
 
 

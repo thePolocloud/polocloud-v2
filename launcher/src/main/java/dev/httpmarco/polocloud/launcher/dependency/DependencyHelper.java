@@ -22,6 +22,7 @@ public class DependencyHelper {
                 outputStream.write(buffer, 0, bytesRead);
             }
         } catch (IOException e) {
+            e.printStackTrace();
             return false;
         }
         return true;

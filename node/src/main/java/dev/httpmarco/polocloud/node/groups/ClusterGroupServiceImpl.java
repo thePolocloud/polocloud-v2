@@ -1,7 +1,5 @@
 package dev.httpmarco.polocloud.node.groups;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import dev.httpmarco.polocloud.api.Named;
 import dev.httpmarco.polocloud.api.groups.ClusterGroup;
 import dev.httpmarco.polocloud.api.groups.ClusterGroupService;
@@ -26,14 +24,12 @@ import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @Getter
-@Singleton
 @Accessors(fluent = true)
 public final class ClusterGroupServiceImpl extends ClusterGroupService {
 
     private final Set<ClusterGroup> groups;
     private final ClusterService clusterService;
 
-    @Inject
     public ClusterGroupServiceImpl(@NotNull ClusterService clusterService) {
         this.clusterService = clusterService;
 

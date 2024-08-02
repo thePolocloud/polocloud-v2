@@ -1,7 +1,5 @@
 package dev.httpmarco.polocloud.node.terminal;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import dev.httpmarco.polocloud.api.Closeable;
 import dev.httpmarco.polocloud.node.NodeConfig;
 import dev.httpmarco.polocloud.node.cluster.ClusterService;
@@ -25,7 +23,6 @@ import java.text.SimpleDateFormat;
 
 @Getter
 @Accessors(fluent = true)
-@Singleton
 @Log4j2
 public final class JLineTerminal implements Closeable {
 
@@ -35,8 +32,6 @@ public final class JLineTerminal implements Closeable {
 
     private static final SimpleDateFormat TERMINAL_LAYOUT = new SimpleDateFormat("HH:mm:ss");
 
-
-    @Inject
     @SneakyThrows
     public JLineTerminal(CommandService commandService, ClusterService clusterService, NodeConfig config) {
         this.terminal = TerminalBuilder.builder()

@@ -14,6 +14,11 @@ public final class FileSystemUtils {
 
     @SneakyThrows
     public void copyClassPathFile(@NotNull ClassLoader classLoader, String fileName, String path) {
-        Files.copy(Objects.requireNonNull(classLoader.getResourceAsStream(fileName)), Path.of(path), StandardCopyOption.REPLACE_EXISTING);
+        Path target = Path.of(path);
+
+        // create dir if not exists
+        target.getParent().toFile().mkdirs();
+
+        Files.copy(Objects.requireNonNull(classLoader.getResourceAsStream(fileName)), target, StandardCopyOption.REPLACE_EXISTING);
     }
 }

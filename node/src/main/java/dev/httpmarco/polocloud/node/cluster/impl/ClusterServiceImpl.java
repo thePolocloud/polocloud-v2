@@ -1,7 +1,5 @@
 package dev.httpmarco.polocloud.node.cluster.impl;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import dev.httpmarco.osgan.networking.packet.Packet;
 import dev.httpmarco.polocloud.node.NodeConfig;
 import dev.httpmarco.polocloud.node.cluster.ClusterService;
@@ -20,14 +18,12 @@ import java.util.Set;
 @Log4j2
 @Getter
 @Accessors(fluent = true)
-@Singleton
 public final class ClusterServiceImpl implements ClusterService {
 
     private final LocalNode localNode;
     private NodeEndpoint headNode;
     private final Set<NodeEndpoint> endpoints;
 
-    @Inject
     public ClusterServiceImpl(@NotNull NodeConfig config) {
         this.localNode = new LocalNodeImpl(config.localNode());
         this.endpoints = new HashSet<>();

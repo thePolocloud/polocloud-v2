@@ -1,6 +1,8 @@
 package dev.httpmarco.polocloud.node.terminal.commands;
 
+import dev.httpmarco.polocloud.api.CloudAPI;
 import dev.httpmarco.polocloud.api.platforms.PlatformGroupDisplay;
+import dev.httpmarco.polocloud.node.Node;
 import dev.httpmarco.polocloud.node.cluster.ClusterService;
 import dev.httpmarco.polocloud.node.commands.Command;
 import dev.httpmarco.polocloud.node.commands.CommandArgumentType;
@@ -14,8 +16,12 @@ import java.util.Arrays;
 @Log4j2
 public final class GroupCommand extends Command {
 
-    public GroupCommand(ClusterService clusterService, ClusterGroupService groupService, PlatformService platformService) {
+    public GroupCommand() {
         super("group");
+
+        var groupService = Node.instance().groupService();
+        var platformService = Node.instance().platformService();
+        var clusterService = Node.instance().clusterService();
 
         // argument for group name
         var groupIdArgument = CommandArgumentType.Text("name");

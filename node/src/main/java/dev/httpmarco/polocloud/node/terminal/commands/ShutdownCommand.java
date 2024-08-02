@@ -7,8 +7,8 @@ import dev.httpmarco.polocloud.node.terminal.JLineTerminal;
 
 public final class ShutdownCommand extends Command {
 
-    public ShutdownCommand(JLineTerminal terminal, ClusterService cluster) {
+    public ShutdownCommand() {
         super("shutdown", "stop", "exit");
-        defaultExecution(commandContext -> NodeShutdown.nodeShutdown(terminal, cluster));
+        defaultExecution(commandContext -> NodeShutdown.nodeShutdown());
     }
 }

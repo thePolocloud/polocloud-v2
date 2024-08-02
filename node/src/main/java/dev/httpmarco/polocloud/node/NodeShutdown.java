@@ -11,7 +11,9 @@ import org.jetbrains.annotations.NotNull;
 @UtilityClass
 public final class NodeShutdown {
 
-    public static void nodeShutdown(@NotNull JLineTerminal terminal, @NotNull ClusterService clusterService) {
+    public static void nodeShutdown() {
+
+        var clusterService = Node.instance().clusterService();
 
         if (clusterService.localNode().situation().isStopping()) {
             return;
@@ -21,7 +23,7 @@ public final class NodeShutdown {
 
         clusterService.close();
 
-        terminal.close();
+        Node.instance().terminal().close();
 
         clusterService.localNode().situation(NodeSituation.STOPPED);
         System.exit(0);

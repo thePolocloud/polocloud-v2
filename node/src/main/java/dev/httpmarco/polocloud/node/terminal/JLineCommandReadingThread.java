@@ -49,7 +49,7 @@ public final class JLineCommandReadingThread extends Thread {
                 } catch (EndOfFileException ignore) {
                 }
             } catch (UserInterruptException exception) {
-                NodeShutdown.nodeShutdown(terminal, clusterService);
+                NodeShutdown.nodeShutdown();
             }
 
         }

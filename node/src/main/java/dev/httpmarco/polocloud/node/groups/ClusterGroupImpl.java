@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -33,5 +34,10 @@ public class ClusterGroupImpl implements ClusterGroup {
     @Override
     public List<ClusterService> services() {
         return Node.instance().serviceProvider().services().stream().filter(it -> it.group().equals(this)).toList();
+    }
+
+    @Override
+    public String details() {
+        return "platform&8=&7" + platform.details() + "&8, &7nodes&8=&7" + Arrays.toString(nodes) + ", &7minMemory&8=&7" + minMemory + "&8, &7maxMemory&8=&7" + maxMemory + "&8, &7static&8=&7" + staticService;
     }
 }

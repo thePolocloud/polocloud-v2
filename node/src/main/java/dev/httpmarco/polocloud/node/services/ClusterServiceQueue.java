@@ -45,9 +45,10 @@ public final class ClusterServiceQueue extends Thread {
                 var differenceGroupServices = group.minOnlineServerInstances() - group.serviceCount();
 
                 for (long i = 0; i < differenceGroupServices; i++) {
-
                     //start new service
                     log.info("Start new service of: {}", group.name());
+                    // call factory
+                    Node.instance().serviceProvider().factory().runGroupService(group);
                 }
             }
             Thread.sleep(5000);

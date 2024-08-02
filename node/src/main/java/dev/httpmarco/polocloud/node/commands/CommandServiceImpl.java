@@ -1,12 +1,10 @@
 package dev.httpmarco.polocloud.node.commands;
 
-import dev.httpmarco.polocloud.node.terminal.commands.ClearCommand;
-import dev.httpmarco.polocloud.node.terminal.commands.GroupCommand;
-import dev.httpmarco.polocloud.node.terminal.commands.ReloadCommand;
-import dev.httpmarco.polocloud.node.terminal.commands.ShutdownCommand;
+import dev.httpmarco.polocloud.node.terminal.commands.*;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 
 import java.util.ArrayList;
@@ -21,7 +19,6 @@ public final class CommandServiceImpl implements CommandService {
 
     public CommandServiceImpl() {
         registerCommand(new ShutdownCommand());
-        registerCommand(new GroupCommand());
         registerCommand(new ClearCommand());
         registerCommand(new ReloadCommand());
     }
@@ -36,6 +33,14 @@ public final class CommandServiceImpl implements CommandService {
     public void registerCommand(Command command) {
         this.commands.add(command);
     }
+
+    @Override
+    public void registerCommands(Command @NotNull ... commands) {
+        for (var command : commands) {
+            registerCommand(command);
+        }
+    }
+
 
     @Override
     public void unregisterCommand(Command command) {

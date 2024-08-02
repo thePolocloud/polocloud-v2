@@ -23,7 +23,7 @@ public final class GroupCommand extends Command {
 
         syntax(context -> {
             log.info("Following &b{} &7groups are loading&8:", groupService.groups().size());
-            groupService.groups().forEach(group -> log.info("&8- &4{}&8: (&7{}&8)", group.name(), group));
+            groupService.groups().forEach(group -> log.info("&8- &f{}&8: (&7{}&8)", group.name(), group.details()));
         }, "List all registered groups&8.", CommandArgumentType.Keyword("list"));
 
         var platformArgument = CommandArgumentType.Platform(platformService, "platform");
@@ -66,7 +66,7 @@ public final class GroupCommand extends Command {
             var group = context.arg(groupArgument);
             log.info("Name&8: &b{}", group.name());
             log.info("Runtime nodes&8: &b{}", String.join("&8, &b", group.nodes()));
-            log.info("Platform&8: &b{}-{}", group.platform().platform(), group.platform().version());
+            log.info("Platform&8: &b{}", group.platform().details());
             log.info("Static service&8: &b{}", group.staticService());
             log.info("Minimum memory&8: &b{}mb", group.minMemory());
             log.info("Maximum memory&8: &b{}mb", group.maxMemory());

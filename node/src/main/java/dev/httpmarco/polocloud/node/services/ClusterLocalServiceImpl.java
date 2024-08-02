@@ -2,11 +2,13 @@ package dev.httpmarco.polocloud.node.services;
 
 import dev.httpmarco.polocloud.api.groups.ClusterGroup;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.util.UUID;
 
 @Getter
+@Setter
 @Accessors(fluent = true)
 public final class ClusterLocalServiceImpl extends ClusterServiceImpl {
 

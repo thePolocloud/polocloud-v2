@@ -24,4 +24,9 @@ public class ClusterServiceImpl implements ClusterService {
     public String details() {
         return "id&8=&7" + id + "&8, &7hostname&8=&7" + hostname + ", &7port&8=&7" + port + "&8, &7node&8=&7" + runningNode;
     }
+
+    @Override
+    public void shutdown() {
+        // todo find node and send him shutdown call
+    }
 }

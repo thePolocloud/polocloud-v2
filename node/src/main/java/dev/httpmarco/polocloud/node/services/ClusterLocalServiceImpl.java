@@ -17,4 +17,12 @@ public final class ClusterLocalServiceImpl extends ClusterServiceImpl {
     public ClusterLocalServiceImpl(ClusterGroup group, int orderedId, UUID id, int port, String hostname, String runningNode) {
         super(group, orderedId, id, port, hostname, runningNode);
     }
+
+    @Override
+    public void shutdown() {
+        if(process == null || !process.isAlive()) {
+            return;
+        }
+        process.toHandle().destroyForcibly();
+    }
 }

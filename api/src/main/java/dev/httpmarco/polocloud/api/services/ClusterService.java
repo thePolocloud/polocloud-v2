@@ -20,6 +20,8 @@ public interface ClusterService extends Named, Detail {
 
     String runningNode();
 
+    void shutdown();
+
     @Override
     default String name() {
         return group().name() + "-" + orderedId();

@@ -27,5 +27,4 @@ public interface ClusterGroup extends Named, Detail {
 
     List<ClusterService> services();
 
-
 }

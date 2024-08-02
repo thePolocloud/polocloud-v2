@@ -2,6 +2,7 @@ package dev.httpmarco.polocloud.node.commands;
 
 import dev.httpmarco.polocloud.node.terminal.commands.ClearCommand;
 import dev.httpmarco.polocloud.node.terminal.commands.GroupCommand;
+import dev.httpmarco.polocloud.node.terminal.commands.ReloadCommand;
 import dev.httpmarco.polocloud.node.terminal.commands.ShutdownCommand;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -22,6 +23,7 @@ public final class CommandServiceImpl implements CommandService {
         registerCommand(new ShutdownCommand());
         registerCommand(new GroupCommand());
         registerCommand(new ClearCommand());
+        registerCommand(new ReloadCommand());
     }
 
     @Contract(pure = true)

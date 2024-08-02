@@ -11,8 +11,7 @@ import java.net.URL;
 @UtilityClass
 public class DependencyHelper {
 
-    public Boolean download(String url, File file) {
-        System.out.println(url);
+    public void download(String url, File file) {
         try (var inputStream = new URL(url).openStream();
              var outputStream = new BufferedOutputStream(new FileOutputStream(file.toString()))) {
 
@@ -23,8 +22,6 @@ public class DependencyHelper {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 }

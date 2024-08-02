@@ -1,17 +1,11 @@
 package dev.httpmarco.polocloud.node.terminal.commands;
 
-import dev.httpmarco.polocloud.api.CloudAPI;
 import dev.httpmarco.polocloud.api.platforms.PlatformGroupDisplay;
 import dev.httpmarco.polocloud.node.Node;
-import dev.httpmarco.polocloud.node.cluster.ClusterService;
 import dev.httpmarco.polocloud.node.commands.Command;
 import dev.httpmarco.polocloud.node.commands.CommandArgumentType;
-import dev.httpmarco.polocloud.api.groups.ClusterGroupService;
 import dev.httpmarco.polocloud.node.groups.ClusterGroupEditFields;
-import dev.httpmarco.polocloud.node.platforms.PlatformService;
 import lombok.extern.log4j.Log4j2;
-
-import java.util.Arrays;
 
 @Log4j2
 public final class GroupCommand extends Command {

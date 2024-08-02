@@ -2,9 +2,13 @@ package dev.httpmarco.polocloud.node.groups;
 
 import dev.httpmarco.polocloud.api.groups.ClusterGroup;
 import dev.httpmarco.polocloud.api.platforms.PlatformGroupDisplay;
+import dev.httpmarco.polocloud.api.services.ClusterService;
+import dev.httpmarco.polocloud.node.Node;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
+
+import java.util.List;
 
 @Getter
 @Accessors(fluent = true)
@@ -21,4 +25,13 @@ public class ClusterGroupImpl implements ClusterGroup {
     private int minOnlineServerInstances;
     private int maxOnlineServerInstances;
 
+    @Override
+    public long serviceCount() {
+        return Node.instance().serviceProvider().services().stream().filter(it -> it.group().equals(this)).count();
+    }
+
+    @Override
+    public List<ClusterService> services() {
+        return Node.instance().serviceProvider().services().stream().filter(it -> it.group().equals(this)).toList();
+    }
 }

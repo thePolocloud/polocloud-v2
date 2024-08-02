@@ -40,8 +40,6 @@ public final class PoloCloudLauncher {
 
         Thread.currentThread().setContextClassLoader(CLASS_LOADER);
 
-        System.out.println(boot.mainClass());
-
         Class.forName(boot.mainClass(), true, CLASS_LOADER).getMethod("main", String[].class).invoke(null, (Object) args);
     }
 }

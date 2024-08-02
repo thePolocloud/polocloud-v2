@@ -1,12 +1,12 @@
-package dev.httpmarco.polocloud.node.cluster.impl;
+package dev.httpmarco.polocloud.node.cluster;
 
 import dev.httpmarco.osgan.networking.packet.Packet;
+import dev.httpmarco.polocloud.node.Node;
 import dev.httpmarco.polocloud.node.NodeConfig;
-import dev.httpmarco.polocloud.node.cluster.ClusterService;
-import dev.httpmarco.polocloud.node.cluster.LocalNode;
-import dev.httpmarco.polocloud.node.cluster.NodeEndpoint;
-import dev.httpmarco.polocloud.node.cluster.NodeSituation;
+import dev.httpmarco.polocloud.node.cluster.impl.LocalNodeImpl;
 import dev.httpmarco.polocloud.node.cluster.tasks.HeadNodeDetection;
+import dev.httpmarco.polocloud.node.packets.cluster.ClusterReloadCallPacket;
+import dev.httpmarco.polocloud.node.packets.cluster.ClusterRequireReloadPacket;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import lombok.extern.log4j.Log4j2;
@@ -27,6 +27,14 @@ public final class ClusterServiceImpl implements ClusterService {
     public ClusterServiceImpl(@NotNull NodeConfig config) {
         this.localNode = new LocalNodeImpl(config.localNode());
         this.endpoints = new HashSet<>();
+
+
+        localNode.transmit().listen(ClusterRequireReloadPacket.class, (transmit, packet) -> broadcastAll(new ClusterReloadCallPacket()));
+        localNode.transmit().listen(ClusterReloadCallPacket.class, (transmit, packet) -> {
+
+            // reloading first all groups
+            Node.instance().groupService().reload();
+        });
     }
 
     @Override
@@ -40,6 +48,7 @@ public final class ClusterServiceImpl implements ClusterService {
             endpoint.transmit().sendPacket(packet);
         }
     }
+
     @Override
     public void broadcastAll(Packet packet) {
         this.localNode.transmit().sendPacket(packet);

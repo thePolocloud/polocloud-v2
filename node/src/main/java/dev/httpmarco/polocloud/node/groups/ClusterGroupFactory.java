@@ -3,7 +3,7 @@ package dev.httpmarco.polocloud.node.groups;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dev.httpmarco.polocloud.api.groups.ClusterGroup;
-import dev.httpmarco.polocloud.api.groups.ClusterGroupService;
+import dev.httpmarco.polocloud.api.groups.ClusterGroupProvider;
 import dev.httpmarco.polocloud.api.packet.group.GroupCreatePacket;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
@@ -27,7 +27,7 @@ public final class ClusterGroupFactory {
             .create();
 
     @SneakyThrows
-    public void createLocalStorageGroup(@NotNull GroupCreatePacket packet, @NotNull ClusterGroupService clusterGroupService) {
+    public void createLocalStorageGroup(@NotNull GroupCreatePacket packet, @NotNull ClusterGroupProvider clusterGroupProvider) {
         var group = new ClusterGroupImpl(
                 packet.name(),
                 packet.platformGroupDisplay(),
@@ -46,16 +46,16 @@ public final class ClusterGroupFactory {
         var groupFile = GROUP_DIR.resolve(group.name() + ".json");
 
         Files.writeString(groupFile, GROUP_GSON.toJson(group));
-        clusterGroupService.groups().add(group);
+        clusterGroupProvider.groups().add(group);
     }
 
     @SneakyThrows
-    public void deleteLocalStorageGroup(String name, @NotNull ClusterGroupService clusterGroupService) {
+    public void deleteLocalStorageGroup(String name, @NotNull ClusterGroupProvider clusterGroupProvider) {
         var groupFile = GROUP_DIR.resolve(name + ".json");
         Files.deleteIfExists(groupFile);
 
         //todo wait for service shutdown
-        clusterGroupService.groups().removeIf(group -> group.name().equalsIgnoreCase(name));
+        clusterGroupProvider.groups().removeIf(group -> group.name().equalsIgnoreCase(name));
     }
 
     @SneakyThrows

@@ -2,10 +2,11 @@ package dev.httpmarco.polocloud.node.groups;
 
 import dev.httpmarco.polocloud.api.Named;
 import dev.httpmarco.polocloud.api.groups.ClusterGroup;
-import dev.httpmarco.polocloud.api.groups.ClusterGroupService;
+import dev.httpmarco.polocloud.api.groups.ClusterGroupProvider;
 import dev.httpmarco.polocloud.api.packet.group.GroupCreatePacket;
 import dev.httpmarco.polocloud.api.packet.group.GroupDeletePacket;
 import dev.httpmarco.polocloud.api.platforms.PlatformGroupDisplay;
+import dev.httpmarco.polocloud.node.Node;
 import dev.httpmarco.polocloud.node.cluster.ClusterService;
 import dev.httpmarco.polocloud.node.groups.requests.GroupCreationRequest;
 import dev.httpmarco.polocloud.node.groups.requests.GroupDeletionRequest;
@@ -25,12 +26,12 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 @Getter
 @Accessors(fluent = true)
-public final class ClusterGroupServiceImpl extends ClusterGroupService {
+public final class ClusterGroupProviderImpl extends ClusterGroupProvider {
 
     private final Set<ClusterGroup> groups;
     private final ClusterService clusterService;
 
-    public ClusterGroupServiceImpl(@NotNull ClusterService clusterService) {
+    public ClusterGroupProviderImpl(@NotNull ClusterService clusterService) {
         this.clusterService = clusterService;
 
         clusterService.localNode().transmit().listen(GroupCreatePacket.class, (transmit, packet) -> ClusterGroupFactory.createLocalStorageGroup(packet, this));
@@ -47,12 +48,12 @@ public final class ClusterGroupServiceImpl extends ClusterGroupService {
     }
 
     @Override
-    public CompletableFuture<Set<ClusterGroup>> groupsAsync() {
+    public @NotNull CompletableFuture<Set<ClusterGroup>> groupsAsync() {
         return CompletableFuture.completedFuture(groups);
     }
 
     @Override
-    public CompletableFuture<Boolean> existsAsync(String group) {
+    public @NotNull CompletableFuture<Boolean> existsAsync(String group) {
         return CompletableFuture.completedFuture(this.groups.stream().anyMatch(it -> it.name().equalsIgnoreCase(group)));
     }
 
@@ -70,5 +71,18 @@ public final class ClusterGroupServiceImpl extends ClusterGroupService {
     @Override
     public @NotNull CompletableFuture<ClusterGroup> findAsync(@NotNull String group) {
         return CompletableFuture.completedFuture(this.groups.stream().filter(it -> it.name().equalsIgnoreCase(group)).findFirst().orElse(null));
+    }
+
+    @Override
+    public void reload() {
+
+        this.groups.clear();
+        if (Node.instance().clusterService().localHead()) {
+            this.groups.addAll(ClusterGroupFactory.readGroups());
+        } else {
+            //todo request groups from head
+        }
+
+        log.info("Successfully reload all group data.");
     }
 }

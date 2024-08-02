@@ -1,11 +1,13 @@
 package dev.httpmarco.polocloud.node;
 
-import dev.httpmarco.polocloud.api.groups.ClusterGroupService;
+import dev.httpmarco.polocloud.api.groups.ClusterGroupProvider;
+import dev.httpmarco.polocloud.api.services.ClusterServiceProvider;
 import dev.httpmarco.polocloud.node.cluster.ClusterService;
 import dev.httpmarco.polocloud.node.cluster.ClusterServiceImpl;
 import dev.httpmarco.polocloud.node.commands.CommandServiceImpl;
-import dev.httpmarco.polocloud.node.groups.ClusterGroupServiceImpl;
+import dev.httpmarco.polocloud.node.groups.ClusterGroupProviderImpl;
 import dev.httpmarco.polocloud.node.platforms.PlatformService;
+import dev.httpmarco.polocloud.node.services.ClusterServiceProviderImpl;
 import dev.httpmarco.polocloud.node.terminal.JLineTerminal;
 import dev.httpmarco.polocloud.node.util.Configurations;
 import lombok.Getter;
@@ -24,7 +26,8 @@ public final class Node {
 
     private final ClusterService clusterService;
     private final PlatformService platformService;
-    private final ClusterGroupService groupService;
+    private final ClusterGroupProvider groupService;
+    private final ClusterServiceProvider serviceProvider;
 
     private final JLineTerminal terminal;
 
@@ -34,11 +37,14 @@ public final class Node {
         var nodeConfig = Configurations.readContent(Path.of("config.json"), new NodeConfig());
 
         this.clusterService = new ClusterServiceImpl(nodeConfig);
-        this.platformService = new PlatformService();
-        this.groupService = new ClusterGroupServiceImpl(clusterService);
 
         var commandService = new CommandServiceImpl();
         this.terminal = new JLineTerminal(commandService, clusterService, nodeConfig);
+
+        this.platformService = new PlatformService();
+        this.groupService = new ClusterGroupProviderImpl(clusterService);
+        this.serviceProvider = new ClusterServiceProviderImpl();
+
 
         // start cluster and check other node
         clusterService.initialize();

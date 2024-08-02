@@ -21,21 +21,16 @@ public class DependencyDownloader {
     }
 
     @SneakyThrows
-    public Boolean download(Dependency dependency) {
+    public void download(Dependency dependency) {
         var file = DOWNLOAD_DIR.resolve(dependency + ".jar").toFile();
 
         if (file.exists()) {
             PoloCloudLauncher.CLASS_LOADER.addURL(file.toURI().toURL());
-            return true;
+            return;
         }
 
-        Boolean download = DependencyHelper.download(dependency.downloadUrl(), file);
-
-        if(download) {
-            PoloCloudLauncher.CLASS_LOADER.addURL(file.toURI().toURL());
-        }
-
-        return download;
+        DependencyHelper.download(dependency.downloadUrl(), file);
+        PoloCloudLauncher.CLASS_LOADER.addURL(file.toURI().toURL());
     }
 
 

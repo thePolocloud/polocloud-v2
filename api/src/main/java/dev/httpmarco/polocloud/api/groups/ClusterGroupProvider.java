@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
-public abstract class ClusterGroupService implements Reloadable {
+public abstract class ClusterGroupProvider implements Reloadable {
 
     public abstract CompletableFuture<Set<ClusterGroup>> groupsAsync();
 

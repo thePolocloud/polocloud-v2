@@ -3,7 +3,7 @@ package dev.httpmarco.polocloud.node.commands.type;
 import dev.httpmarco.polocloud.api.Named;
 import dev.httpmarco.polocloud.api.groups.ClusterGroup;
 import dev.httpmarco.polocloud.node.commands.CommandArgument;
-import dev.httpmarco.polocloud.api.groups.ClusterGroupService;
+import dev.httpmarco.polocloud.api.groups.ClusterGroupProvider;
 import dev.httpmarco.polocloud.node.commands.CommandContext;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -14,9 +14,9 @@ import java.util.Objects;
 
 public final class GroupArgument extends CommandArgument<ClusterGroup> {
 
-    private final ClusterGroupService groupService;
+    private final ClusterGroupProvider groupService;
 
-    public GroupArgument(String key, ClusterGroupService groupService) {
+    public GroupArgument(String key, ClusterGroupProvider groupService) {
         super(key);
         this.groupService = groupService;
     }

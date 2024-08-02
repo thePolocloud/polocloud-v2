@@ -16,6 +16,10 @@ public final class NodeBoot extends AbstractBoot {
     @Override
     public @NotNull File bootFile() {
         var path = Path.of("local/dependencies/polocloud-node.jar");
+
+        // create path if not exists
+        path.toFile().getParentFile().mkdirs();
+
         FileSystemUtils.copyClassPathFile(this.getClass().getClassLoader(), "polocloud-node.jar", path.toString());
         return path.toFile();
     }

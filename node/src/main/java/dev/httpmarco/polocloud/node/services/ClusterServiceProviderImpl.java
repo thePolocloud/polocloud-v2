@@ -14,9 +14,11 @@ import java.util.concurrent.CompletableFuture;
 public final class ClusterServiceProviderImpl extends ClusterServiceProvider {
 
     private final ClusterServiceFactory factory = new ClusterServiceFactoryImpl();
+    private final ClusterServiceQueue clusterServiceQueue = new ClusterServiceQueue();
 
     @Override
     public CompletableFuture<List<ClusterService>> servicesAsync() {
-        return null;
+        //todo
+        return CompletableFuture.completedFuture(List.of());
     }
 }

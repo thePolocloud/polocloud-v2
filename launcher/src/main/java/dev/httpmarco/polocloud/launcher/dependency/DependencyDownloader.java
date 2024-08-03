@@ -61,7 +61,7 @@ public class DependencyDownloader {
     private void logProgress(int total, int current, String name) {
         var time = LocalTime.now();
         var formattedTime = DateTimeFormatter.ofPattern("HH:mm:ss").format(time);
-        System.out.printf("\r%s \u001B[90m| \u001B[36mInfo\u001B[90m:\u001B[0m Downloading Dependencies - %s (\u001B[36m%d\u001B[0m/\u001B[36m%d\u001B[0m)", formattedTime, name, current, total);
+        System.out.printf("\r%s \u001B[90m| \u001B[36mINFO\u001B[90m:\u001B[0m Downloading Dependencies - %s (\u001B[36m%d\u001B[0m/\u001B[36m%d\u001B[0m)", formattedTime, name, current, total);
     }
 
     private void clearTerminal() {

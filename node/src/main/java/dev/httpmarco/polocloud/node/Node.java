@@ -1,14 +1,16 @@
 package dev.httpmarco.polocloud.node;
 
 import dev.httpmarco.polocloud.api.groups.ClusterGroupProvider;
-import dev.httpmarco.polocloud.api.services.ClusterServiceProvider;
 import dev.httpmarco.polocloud.node.cluster.ClusterService;
 import dev.httpmarco.polocloud.node.cluster.ClusterServiceImpl;
+import dev.httpmarco.polocloud.node.commands.CommandService;
 import dev.httpmarco.polocloud.node.commands.CommandServiceImpl;
 import dev.httpmarco.polocloud.node.groups.ClusterGroupProviderImpl;
 import dev.httpmarco.polocloud.node.platforms.PlatformService;
 import dev.httpmarco.polocloud.node.services.ClusterServiceProviderImpl;
 import dev.httpmarco.polocloud.node.terminal.JLineTerminal;
+import dev.httpmarco.polocloud.node.terminal.commands.GroupCommand;
+import dev.httpmarco.polocloud.node.terminal.commands.ServiceCommand;
 import dev.httpmarco.polocloud.node.util.Configurations;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -27,9 +29,10 @@ public final class Node {
     private final ClusterService clusterService;
     private final PlatformService platformService;
     private final ClusterGroupProvider groupService;
-    private final ClusterServiceProvider serviceProvider;
+    private final ClusterServiceProviderImpl serviceProvider;
 
     private final JLineTerminal terminal;
+    private final CommandService commandService;
 
     public Node() {
         instance = this;
@@ -38,20 +41,24 @@ public final class Node {
 
         this.clusterService = new ClusterServiceImpl(nodeConfig);
 
-        var commandService = new CommandServiceImpl();
-        this.terminal = new JLineTerminal(commandService, clusterService, nodeConfig);
+        this.commandService = new CommandServiceImpl();
+        this.terminal = new JLineTerminal(nodeConfig);
 
         this.platformService = new PlatformService();
         this.groupService = new ClusterGroupProviderImpl(clusterService);
         this.serviceProvider = new ClusterServiceProviderImpl();
 
+        // register provider commands
+        this.commandService.registerCommands(new GroupCommand(), new ServiceCommand());
 
         // start cluster and check other node
-        clusterService.initialize();
+        this.clusterService.initialize();
 
         Runtime.getRuntime().addShutdownHook(new Thread(NodeShutdown::nodeShutdown));
 
         log.info("Cluster node boot successfully &8(&7Took {}ms&8)", System.currentTimeMillis() - Long.parseLong(System.getProperty("startup")));
-        terminal.allowInput();
+
+        this.terminal.allowInput();
+        this.serviceProvider.clusterServiceQueue().start();
     }
 }

@@ -20,18 +20,8 @@ public class NodeLauncher {
             System.setProperty("startup", String.valueOf(System.currentTimeMillis()));
             new Node();
         } catch (Exception exception) {
-            for (var errorLine : exception.getMessage().split("\\n", -1)) {
-                System.err.println(errorLine);
-            }
-
-            for (StackTraceElement traceElement : exception.getStackTrace()) {
-                System.err.println(traceElement);
-            }
-
-            for (StackTraceElement throwable : exception.getCause().getStackTrace()) {
-                System.err.println(throwable);
-            }
-            exception.printStackTrace();
+            // check for remove
+           exception.printStackTrace();
         }
     }
 }

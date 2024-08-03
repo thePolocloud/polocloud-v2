@@ -1,7 +1,7 @@
 package dev.httpmarco.polocloud.node.terminal;
 
+import dev.httpmarco.polocloud.node.Node;
 import dev.httpmarco.polocloud.node.commands.CommandContext;
-import dev.httpmarco.polocloud.node.commands.CommandService;
 import dev.httpmarco.polocloud.node.commands.CommandSyntax;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -18,10 +18,10 @@ import java.util.List;
 @AllArgsConstructor
 public final class JLineTerminalCompleter implements Completer {
 
-    private CommandService commandService;
-
     @Override
     public void complete(LineReader lineReader, @NotNull ParsedLine parsedLine, List<Candidate> list) {
+        var commandService = Node.instance().commandService();
+
         if (parsedLine.wordIndex() == 0) {
             // we only display the command names -> not aliases
 

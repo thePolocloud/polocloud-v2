@@ -5,6 +5,7 @@ import dev.httpmarco.polocloud.api.services.ClusterService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
+
 import java.util.UUID;
 
 @Getter
@@ -19,4 +20,13 @@ public class ClusterServiceImpl implements ClusterService {
     private final String hostname;
     private final String runningNode;
 
+    @Override
+    public String details() {
+        return "id&8=&7" + id + "&8, &7hostname&8=&7" + hostname + ", &7port&8=&7" + port + "&8, &7node&8=&7" + runningNode;
+    }
+
+    @Override
+    public void shutdown() {
+        // todo find node and send him shutdown call
+    }
 }

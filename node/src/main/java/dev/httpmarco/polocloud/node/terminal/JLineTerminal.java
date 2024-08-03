@@ -2,8 +2,6 @@ package dev.httpmarco.polocloud.node.terminal;
 
 import dev.httpmarco.polocloud.api.Closeable;
 import dev.httpmarco.polocloud.node.NodeConfig;
-import dev.httpmarco.polocloud.node.cluster.ClusterService;
-import dev.httpmarco.polocloud.node.commands.CommandService;
 import dev.httpmarco.polocloud.node.logging.Log4j2Stream;
 import dev.httpmarco.polocloud.node.terminal.util.TerminalColorUtil;
 import dev.httpmarco.polocloud.node.terminal.util.TerminalHeader;
@@ -17,9 +15,7 @@ import org.jline.reader.LineReaderBuilder;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.jline.utils.InfoCmp;
-
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
 
 @Getter
 @Accessors(fluent = true)
@@ -30,10 +26,8 @@ public final class JLineTerminal implements Closeable {
     private final LineReader lineReader;
     private final JLineCommandReadingThread commandReadingThread;
 
-    private static final SimpleDateFormat TERMINAL_LAYOUT = new SimpleDateFormat("HH:mm:ss");
-
     @SneakyThrows
-    public JLineTerminal(CommandService commandService, ClusterService clusterService, NodeConfig config) {
+    public JLineTerminal(NodeConfig config) {
         this.terminal = TerminalBuilder.builder()
                 .system(true)
                 .encoding(StandardCharsets.UTF_8)
@@ -43,7 +37,7 @@ public final class JLineTerminal implements Closeable {
 
         this.lineReader = LineReaderBuilder.builder()
                 .terminal(terminal)
-                .completer(new JLineTerminalCompleter(commandService))
+                .completer(new JLineTerminalCompleter())
 
                 .option(LineReader.Option.AUTO_MENU_LIST, true)
                 // change color of selection box
@@ -59,7 +53,7 @@ public final class JLineTerminal implements Closeable {
         System.setOut(new Log4j2Stream(this::printLine).printStream());
         System.setErr(new Log4j2Stream(log::error).printStream());
 
-        this.commandReadingThread = new JLineCommandReadingThread(config, clusterService, commandService, this);
+        this.commandReadingThread = new JLineCommandReadingThread(config, this);
 
         clear();
         TerminalHeader.print(this, config);

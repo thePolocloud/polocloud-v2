@@ -1,11 +1,12 @@
 package dev.httpmarco.polocloud.api.services;
 
+import dev.httpmarco.polocloud.api.Detail;
 import dev.httpmarco.polocloud.api.Named;
 import dev.httpmarco.polocloud.api.groups.ClusterGroup;
 
 import java.util.UUID;
 
-public interface ClusterService extends Named {
+public interface ClusterService extends Named, Detail {
 
     ClusterGroup group();
 
@@ -18,6 +19,8 @@ public interface ClusterService extends Named {
     String hostname();
 
     String runningNode();
+
+    void shutdown();
 
     @Override
     default String name() {

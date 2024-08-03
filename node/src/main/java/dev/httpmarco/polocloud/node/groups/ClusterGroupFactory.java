@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import dev.httpmarco.polocloud.api.groups.ClusterGroup;
 import dev.httpmarco.polocloud.api.groups.ClusterGroupProvider;
 import dev.httpmarco.polocloud.api.packet.group.GroupCreatePacket;
+import dev.httpmarco.polocloud.api.services.ClusterService;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
@@ -51,10 +52,16 @@ public final class ClusterGroupFactory {
 
     @SneakyThrows
     public void deleteLocalStorageGroup(String name, @NotNull ClusterGroupProvider clusterGroupProvider) {
+        var clusterGroup = clusterGroupProvider.find(name);
+
+        if (clusterGroup == null) {
+            return;
+        }
+
         var groupFile = GROUP_DIR.resolve(name + ".json");
         Files.deleteIfExists(groupFile);
 
-        //todo wait for service shutdown
+        clusterGroup.services().forEach(ClusterService::shutdown);
         clusterGroupProvider.groups().removeIf(group -> group.name().equalsIgnoreCase(name));
     }
 

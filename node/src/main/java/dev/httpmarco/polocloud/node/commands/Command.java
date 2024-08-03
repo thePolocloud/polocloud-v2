@@ -15,8 +15,8 @@ public abstract class Command {
     private final String[] aliases;
     private final String description;
 
-    public @Nullable CommandExecution defaultExecution;
-    public final List<CommandSyntax> commandSyntaxes = new ArrayList<>();
+    private @Nullable CommandExecution defaultExecution;
+    private final List<CommandSyntax> commandSyntaxes = new ArrayList<>();
 
     public Command(String name, String description, String... aliases) {
         this.name = name;

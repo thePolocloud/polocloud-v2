@@ -22,7 +22,7 @@ public final class GroupCommand extends Command {
         var groupArgument = CommandArgumentType.ClusterGroup(groupService, "group");
 
         syntax(context -> {
-            log.info("Following &b{} &7groups are loading&8:", groupService.groups().size());
+            log.info("Following &b{} &7groups are loaded&8:", groupService.groups().size());
             groupService.groups().forEach(group -> log.info("&8- &f{}&8: (&7{}&8)", group.name(), group.details()));
         }, "List all registered groups&8.", CommandArgumentType.Keyword("list"));
 

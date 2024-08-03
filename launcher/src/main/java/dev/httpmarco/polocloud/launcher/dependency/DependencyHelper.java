@@ -20,9 +20,6 @@ public class DependencyHelper {
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, bytesRead);
             }
-            //TODO animation?
-            // Exmaple: Downloading Dependencies - <Dependency name> (1/24)
-            System.out.println(url);
         } catch (IOException e) {
             e.printStackTrace();
         }

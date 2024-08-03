@@ -18,9 +18,10 @@ public final class CommandServiceImpl implements CommandService {
     private final List<Command> commands = new ArrayList<>();
 
     public CommandServiceImpl() {
-        registerCommand(new ShutdownCommand());
-        registerCommand(new ClearCommand());
-        registerCommand(new ReloadCommand());
+        this.registerCommand(new ShutdownCommand());
+        this.registerCommand(new ClearCommand());
+        this.registerCommand(new ReloadCommand());
+        this.registerCommand(new HelpCommand());
     }
 
     @Contract(pure = true)

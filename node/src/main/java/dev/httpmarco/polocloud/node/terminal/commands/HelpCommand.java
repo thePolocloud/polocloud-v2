@@ -14,7 +14,7 @@ public class HelpCommand extends Command {
             for (var command : Node.instance().commandService().commands()) {
                 var aliases = command.aliases().length != 0 ? " &8(&7" + String.join("&8, &7", command.aliases()) + "&8)" : "";
 
-                log.info("&b{}{} &8- &7{}&8.", command.name(), aliases, command.description());
+                log.info("&f{}{} &8- &7{}&8.", command.name(), aliases, command.description());
             }
         });
     }

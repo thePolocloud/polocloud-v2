@@ -5,6 +5,9 @@ import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
 import java.nio.file.Path;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -40,10 +43,30 @@ public class DependencyDownloader {
         }
     }
 
+    public static void download(Dependency... dependencies) {
+        downloadDependenciesWithProgress(List.of(dependencies));
+    }
 
-    public void download(Dependency... dependency) {
-        for (var depend : dependency) {
-            download(depend);
+    private void downloadDependenciesWithProgress(List<Dependency> dependencies) {
+        int totalDependencies = dependencies.size();
+        for (int i = 0; i < totalDependencies; i++) {
+            var dependency = dependencies.get(i);
+            logProgress(totalDependencies, i + 1, dependency.artifactId());
+            download(dependency);
         }
+
+        clearTerminal();
+    }
+
+    private void logProgress(int total, int current, String name) {
+        var time = LocalTime.now();
+        var formattedTime = DateTimeFormatter.ofPattern("HH:mm:ss").format(time);
+        System.out.printf("\r%s \u001B[90m| \u001B[36mInfo\u001B[90m:\u001B[0m Downloading Dependencies - %s (\u001B[36m%d\u001B[0m/\u001B[36m%d\u001B[0m)", formattedTime, name, current, total);
+    }
+
+    private void clearTerminal() {
+        System.out.print("\r");
+        System.out.print(" ".repeat(80));
+        System.out.print("\r");
     }
 }

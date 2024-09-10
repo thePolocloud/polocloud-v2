@@ -23,7 +23,7 @@ bungeecord = "1.20-R0.2"
 waterdogpe = "1.2.4"
 nukkit = "1.0-SNAPSHOT"
 fabric = "0.16.2"
-sponge = "9.0.0"
+sponge = "11.0.0"
 
 # rest
 javalin = "6.3.0"

@@ -4,7 +4,7 @@ lombok = "1.18.34"
 annotations = "25.0.0"
 
 # network
-osgan = "1.0.30-SNAPSHOT"
+osgan = "1.0.31-SNAPSHOT"
 netty5 = "5.0.0.Alpha5"
 
 #logging

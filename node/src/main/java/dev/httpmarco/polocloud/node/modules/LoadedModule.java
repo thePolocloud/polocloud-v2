@@ -1,4 +1,4 @@
-package dev.httpmarco.polocloud.api.modules;
+package dev.httpmarco.polocloud.node.modules;
 
 import java.net.URLClassLoader;
 

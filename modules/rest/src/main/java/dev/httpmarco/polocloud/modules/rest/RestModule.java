@@ -5,7 +5,7 @@ import dev.httpmarco.polocloud.modules.rest.configuration.Config;
 import dev.httpmarco.polocloud.modules.rest.controller.ControllerService;
 import dev.httpmarco.polocloud.modules.rest.auth.user.UserService;
 import dev.httpmarco.polocloud.modules.rest.socket.web.WebSocketService;
-import dev.httpmarco.polocloud.api.modules.CloudModule;
+import dev.httpmarco.polocloud.node.modules.CloudModule;
 import io.javalin.Javalin;
 import io.javalin.http.HttpStatus;
 import lombok.Getter;

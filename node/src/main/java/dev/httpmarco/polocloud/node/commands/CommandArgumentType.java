@@ -6,7 +6,7 @@ import dev.httpmarco.polocloud.api.services.ClusterService;
 import dev.httpmarco.polocloud.node.cluster.NodeEndpoint;
 import dev.httpmarco.polocloud.node.commands.specific.*;
 import dev.httpmarco.polocloud.node.commands.type.*;
-import dev.httpmarco.polocloud.api.modules.LoadedModule;
+import dev.httpmarco.polocloud.node.modules.LoadedModule;
 import dev.httpmarco.polocloud.node.platforms.Platform;
 import dev.httpmarco.polocloud.node.platforms.PlatformVersion;
 import dev.httpmarco.polocloud.node.templates.Template;

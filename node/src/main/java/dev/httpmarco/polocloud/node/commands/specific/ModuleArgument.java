@@ -3,7 +3,7 @@ package dev.httpmarco.polocloud.node.commands.specific;
 import dev.httpmarco.polocloud.node.Node;
 import dev.httpmarco.polocloud.node.commands.CommandArgument;
 import dev.httpmarco.polocloud.node.commands.CommandContext;
-import dev.httpmarco.polocloud.api.modules.LoadedModule;
+import dev.httpmarco.polocloud.node.modules.LoadedModule;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;

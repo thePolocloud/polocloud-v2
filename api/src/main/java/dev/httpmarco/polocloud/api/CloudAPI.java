@@ -2,7 +2,6 @@ package dev.httpmarco.polocloud.api;
 
 import dev.httpmarco.polocloud.api.event.EventProvider;
 import dev.httpmarco.polocloud.api.groups.ClusterGroupProvider;
-import dev.httpmarco.polocloud.api.modules.ModuleProvider;
 import dev.httpmarco.polocloud.api.players.ClusterPlayerProvider;
 import dev.httpmarco.polocloud.api.services.ClusterServiceProvider;
 import lombok.Getter;
@@ -25,6 +24,4 @@ public abstract class CloudAPI {
     public abstract EventProvider eventProvider();
 
     public abstract ClusterPlayerProvider playerProvider();
-
-    public abstract ModuleProvider moduleProvider();
 }

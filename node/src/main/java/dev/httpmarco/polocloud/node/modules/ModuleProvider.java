@@ -1,9 +1,6 @@
 package dev.httpmarco.polocloud.node.modules;
 
-import dev.httpmarco.polocloud.api.modules.CloudModule;
-import dev.httpmarco.polocloud.api.modules.LoadedModule;
-import dev.httpmarco.polocloud.api.modules.ModuleMetadata;
-import dev.httpmarco.polocloud.api.modules.ModuleProvider;
+import dev.httpmarco.polocloud.api.Reloadable;
 import dev.httpmarco.polocloud.launcher.PoloCloudLauncher;
 import dev.httpmarco.polocloud.node.util.JsonUtils;
 import lombok.SneakyThrows;
@@ -23,19 +20,18 @@ import java.util.jar.JarFile;
 
 @Log4j2
 @Accessors(fluent = true)
-public class ModuleProviderImpl extends ModuleProvider {
+public class ModuleProvider implements Reloadable {
 
     private static final Path MODULE_PATH = Path.of("./local/modules/");
     private final List<LoadedModule> loadedModules = new CopyOnWriteArrayList<>();
 
     @SneakyThrows
-    public ModuleProviderImpl() {
+    public ModuleProvider() {
         if (!Files.exists(MODULE_PATH)) {
             Files.createDirectory(MODULE_PATH);
         }
     }
 
-    @Override
     @SneakyThrows
     public void loadAllUnloadedModules() {
         var moduleFiles = this.getAllModuleJarFiles();
@@ -78,12 +74,10 @@ public class ModuleProviderImpl extends ModuleProvider {
         }
     }
 
-    @Override
     public void unloadAllModules() {
         this.loadedModules.forEach(this::unloadModule);
     }
 
-    @Override
     public List<LoadedModule> loadedModules() {
         return new ArrayList<>(this.loadedModules);
     }

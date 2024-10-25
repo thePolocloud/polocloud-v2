@@ -3,8 +3,7 @@ package dev.httpmarco.polocloud.node.commands.specific;
 import dev.httpmarco.polocloud.node.Node;
 import dev.httpmarco.polocloud.node.commands.CommandArgument;
 import dev.httpmarco.polocloud.node.commands.CommandContext;
-import dev.httpmarco.polocloud.node.module.LoadedModule;
-import dev.httpmarco.polocloud.node.module.ModuleProvider;
+import dev.httpmarco.polocloud.api.modules.LoadedModule;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
@@ -19,7 +18,7 @@ public final class ModuleArgument extends CommandArgument<LoadedModule> {
 
     @Override
     public boolean predication(@NotNull String rawInput) {
-        return Node.instance().moduleProvider().getLoadedModules().stream().anyMatch(it -> it.metadata().id().startsWith(rawInput));
+        return Node.instance().moduleProvider().loadedModules().stream().anyMatch(it -> it.metadata().id().startsWith(rawInput));
     }
 
     @Contract(pure = true)
@@ -30,12 +29,12 @@ public final class ModuleArgument extends CommandArgument<LoadedModule> {
 
     @Override
     public @NotNull @Unmodifiable List<String> defaultArgs(CommandContext context) {
-        return Node.instance().moduleProvider().getLoadedModules().stream().map(it -> it.metadata().id()).toList();
+        return Node.instance().moduleProvider().loadedModules().stream().map(it -> it.metadata().id()).toList();
     }
 
     @Contract("_ -> new")
     @Override
     public LoadedModule buildResult(String input) {
-        return Node.instance().moduleProvider().getLoadedModules().stream().filter(it -> it.metadata().id().equals(input)).findFirst().orElse(null);
+        return Node.instance().moduleProvider().loadedModules().stream().filter(it -> it.metadata().id().equals(input)).findFirst().orElse(null);
     }
 }

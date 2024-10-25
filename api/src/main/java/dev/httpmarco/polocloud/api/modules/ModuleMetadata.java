@@ -1,4 +1,4 @@
-package dev.httpmarco.polocloud.node.module;
+package dev.httpmarco.polocloud.api.modules;
 
 public record ModuleMetadata(String id, String name, String version, String description, String author, String main) {
 

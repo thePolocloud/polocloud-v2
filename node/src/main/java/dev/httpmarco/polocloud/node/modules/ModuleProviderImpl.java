@@ -1,6 +1,9 @@
-package dev.httpmarco.polocloud.node.module;
+package dev.httpmarco.polocloud.node.modules;
 
-import dev.httpmarco.polocloud.api.Reloadable;
+import dev.httpmarco.polocloud.api.modules.CloudModule;
+import dev.httpmarco.polocloud.api.modules.LoadedModule;
+import dev.httpmarco.polocloud.api.modules.ModuleMetadata;
+import dev.httpmarco.polocloud.api.modules.ModuleProvider;
 import dev.httpmarco.polocloud.launcher.PoloCloudLauncher;
 import dev.httpmarco.polocloud.node.util.JsonUtils;
 import lombok.SneakyThrows;
@@ -20,18 +23,19 @@ import java.util.jar.JarFile;
 
 @Log4j2
 @Accessors(fluent = true)
-public class ModuleProvider implements Reloadable {
+public class ModuleProviderImpl extends ModuleProvider {
 
     private static final Path MODULE_PATH = Path.of("./local/modules/");
     private final List<LoadedModule> loadedModules = new CopyOnWriteArrayList<>();
 
     @SneakyThrows
-    public ModuleProvider() {
+    public ModuleProviderImpl() {
         if (!Files.exists(MODULE_PATH)) {
             Files.createDirectory(MODULE_PATH);
         }
     }
 
+    @Override
     @SneakyThrows
     public void loadAllUnloadedModules() {
         var moduleFiles = this.getAllModuleJarFiles();
@@ -70,15 +74,17 @@ public class ModuleProvider implements Reloadable {
 
         if (!modules.isEmpty()) {
             log.info("Loaded modules&8: {}", String.join("&8, ", modules));
-            this.getLoadedModules().forEach(it -> it.cloudModule().onEnable());
+            this.loadedModules().forEach(it -> it.cloudModule().onEnable());
         }
     }
 
+    @Override
     public void unloadAllModules() {
         this.loadedModules.forEach(this::unloadModule);
     }
 
-    public List<LoadedModule> getLoadedModules() {
+    @Override
+    public List<LoadedModule> loadedModules() {
         return new ArrayList<>(this.loadedModules);
     }
 

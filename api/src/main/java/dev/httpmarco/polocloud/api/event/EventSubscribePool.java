@@ -31,9 +31,18 @@ public final class EventSubscribePool implements Named {
     }
 
     public void acceptActor(@NotNull EventCallPacket packet) {
-        if(!actors.containsKey(packet.className())) {
-            return;
+        for (Map.Entry<String, EventActor> entry : this.actors.entrySet()) {
+            try {
+                Class<?> registeredClass = Class.forName(entry.getKey());
+                Class<?> eventClass = Class.forName(packet.className());
+
+                if (registeredClass.isAssignableFrom(eventClass)) {
+                    entry.getValue().alert(packet);
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
-        this.actors.get(packet.className()).alert(packet);
     }
+
 }

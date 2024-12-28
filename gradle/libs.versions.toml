@@ -16,7 +16,7 @@ nexusPublish = "2.0.0"
 shadow = "8.1.8"
 
 # Test
-junit = "5.11.3"
+junit = "5.11.4"
 
 # Protocol
 netty = "5.0.0.Alpha5"

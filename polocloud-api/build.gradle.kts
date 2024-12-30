@@ -8,6 +8,7 @@ dependencies {
     compileOnlyApi(libs.annotations)
 }
 
-tasks.jar {
+tasks.named("jar", Jar::class) {
     archiveFileName.set("polocloud-api-${version}.jar")
+    from(sourceSets.main.get().output)
 }

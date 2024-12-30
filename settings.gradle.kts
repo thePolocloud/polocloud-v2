@@ -1,3 +1,5 @@
+
+
 pluginManagement {
     includeBuild("polocloud-gradle-structure")
     repositories {
@@ -13,13 +15,15 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 rootProject.name = "polocloud"
 
-include("polocloud-api")
-include("polocloud-bom")
-include("polocloud-common")
-include("polocloud-daemon")
-include("polocloud-installer")
-include("polocloud-launcher")
-include("polocloud-node")
-include("polocloud-components")
-include("polocloud-components:component-terminal")
+include(
+    "polocloud-api",
+    "polocloud-bom",
+    "polocloud-common",
+    "polocloud-daemon",
+    "polocloud-installer",
+    "polocloud-launcher",
+    "polocloud-node",
+    "polocloud-components",
+    "polocloud-components:component-terminal"
+)
 findProject(":polocloud-components:component-terminal")?.name = "component-terminal"

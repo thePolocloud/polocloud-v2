@@ -4,7 +4,7 @@ import java.util.Collection;
 
 /**
  * Accept all subcomponents for the cloud system
- * For example: rest component oder console component
+ * For example: rest component or console component
  */
 public interface ComponentProvider {
 

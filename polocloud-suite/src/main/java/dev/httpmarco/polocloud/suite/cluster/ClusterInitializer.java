@@ -21,13 +21,15 @@ public class ClusterInitializer {
     private static final Logger log = LogManager.getLogger(ClusterInitializer.class);
 
     public Cluster generate(ClusterConfig config) {
+        var translation = PolocloudSuite.instance().translation();
+
         if (config instanceof ClusterGlobalConfig clusterGlobalConfig) {
-            log.info("Use &fglobal &7cluster profile.");
+            log.info(translation.get("cluster.initializer.globalClusterProfile"));
 
             var redisClient = new RedisClient(clusterGlobalConfig.redis());
 
             if (!redisClient.available()) {
-                log.error("Redis is not available! Please check your redis configuration!");
+                log.error(translation.get("cluster.initializer.redisUnavailable"));
                 System.exit(-1);
                 return null;
             }
@@ -35,7 +37,7 @@ public class ClusterInitializer {
             cluster.initializeExternals();
             return cluster;
         } else {
-            log.info("Use &flocal &7cluster profile.");
+            log.info(translation.get("cluster.initializer.localClusterProfile"));
             return new LocalCluster();
         }
     }
@@ -92,7 +94,7 @@ public class ClusterInitializer {
             // polocloudSuite.commandService().refresh();
             return localCluster;
         }
-        log.warn("The cluster is already a local cluster!");
+        log.warn(PolocloudSuite.instance().translation().get("cluster.initializer.clusterAlreadyLocal"));
         return null;
     }
 }

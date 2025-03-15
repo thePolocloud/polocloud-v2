@@ -2,18 +2,26 @@ package dev.httpmarco.polocloud.suite.i18n;
 
 import dev.httpmarco.polocloud.suite.terminal.LoggingColors;
 import dev.httpmarco.polocloud.suite.i18n.utils.UTF8Control;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.util.Collections;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+@Accessors(fluent = true)
 public class I18nProvider implements I18n {
 
     private final String resourceBundlePrefix;
+    @Setter
+    @Getter
+    private Locale locale;
 
     public I18nProvider(String resourceBundlePrefix) {
         this.resourceBundlePrefix = resourceBundlePrefix;
+        this.locale = Locale.ENGLISH; // default/backup locale is English
     }
 
     @Override
@@ -41,7 +49,7 @@ public class I18nProvider implements I18n {
 
     @Override
     public String getDefault(String key, Object... format) {
-        return get(key, Locale.ENGLISH, format);
+        return get(key, this.locale, format);
     }
 
     @Override
@@ -55,7 +63,7 @@ public class I18nProvider implements I18n {
 
     @Override
     public ResourceBundle defaultResourceBundle() {
-        return this.localBundle(Locale.ENGLISH);
+        return this.localBundle(this.locale);
     }
 
     public ResourceBundle localBundle(Locale locale) {

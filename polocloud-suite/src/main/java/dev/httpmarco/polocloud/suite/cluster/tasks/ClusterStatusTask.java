@@ -1,6 +1,7 @@
 package dev.httpmarco.polocloud.suite.cluster.tasks;
 
 import dev.httpmarco.polocloud.grpc.ClusterService;
+import dev.httpmarco.polocloud.suite.PolocloudSuite;
 import dev.httpmarco.polocloud.suite.cluster.global.GlobalCluster;
 import dev.httpmarco.polocloud.suite.utils.tasks.TickTask;
 import org.apache.logging.log4j.LogManager;
@@ -36,13 +37,14 @@ public class ClusterStatusTask extends TickTask {
             var state = suite.available() ? suite.clusterStub().requestState(ClusterService.EmptyCall.newBuilder().build()).getState() : ClusterService.State.OFFLINE;
 
             if (state != currentState) {
+                var translation = PolocloudSuite.instance().translation();
                 // we must update the new state
                 if ((currentState == ClusterService.State.OFFLINE || currentState == ClusterService.State.INITIALIZING) && state == ClusterService.State.AVAILABLE) {
-                    log.info("The suite {} is now online and bound to the cluster!", suite.id());
+                    log.info(translation.get("cluster.notification.suiteOnline", suite.id()));
                 }
 
                 if((currentState == ClusterService.State.AVAILABLE || currentState == ClusterService.State.INITIALIZING) && state == ClusterService.State.OFFLINE) {
-                    log.info("The suite {} is now offline and unbound from the cluster!", suite.id());
+                    log.info(translation.get("cluster.notification.suiteOffline", suite.id()));
                 }
 
                 suite.state(state);

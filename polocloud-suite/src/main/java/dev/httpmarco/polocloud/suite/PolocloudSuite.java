@@ -24,9 +24,9 @@ import org.apache.logging.log4j.Logger;
 public final class PolocloudSuite extends Polocloud {
 
     private static final Logger log = LogManager.getLogger(PolocloudSuite.class);
-    private final I18n translation = new I18nPolocloudSuite();
 
     private final SuiteConfig config;
+    private final I18n translation;
     private final CommandService commandService;
     private final PolocloudTerminal terminal;
 
@@ -36,6 +36,7 @@ public final class PolocloudSuite extends Polocloud {
 
     public PolocloudSuite() {
         this.config = SuiteConfig.load();
+        this.translation =new I18nPolocloudSuite();
         this.commandService = new CommandService();
         this.dependencyProvider = new DependencyProviderImpl();
         this.cluster = ClusterInitializer.generate(config.cluster());

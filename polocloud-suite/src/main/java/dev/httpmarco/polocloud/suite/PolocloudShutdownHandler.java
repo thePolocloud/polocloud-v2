@@ -24,14 +24,16 @@ public class PolocloudShutdownHandler {
         idleShutdown = true;
 
         var cluster = PolocloudSuite.instance().cluster();
+        var translation = PolocloudSuite.instance().translation();
+
         if(cluster != null) {
-            log.info("Shutting down Cluster...");
+            log.info(translation.get("shutdown.cluster"));
             cluster.close();
-            log.info("Cluster is successfully shut down.");
+            log.info(translation.get("shutdown.clusterSuccessfully"));
         }
 
         AnsiConsole.systemUninstall();
-        log.info("Shutting down Polocloud Suite...");
+        log.info(translation.get("shutdown.suite"));
 
         if(!Thread.currentThread().getName().equals(SHUTDOWN_HOOK)) {
             System.exit(-1);

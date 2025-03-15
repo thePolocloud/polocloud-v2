@@ -1,5 +1,6 @@
 package dev.httpmarco.polocloud.suite.dependencies.impl;
 
+import dev.httpmarco.polocloud.suite.PolocloudSuite;
 import dev.httpmarco.polocloud.suite.dependencies.DependencyProvider;
 import dev.httpmarco.polocloud.suite.dependencies.DependencySlot;
 import dev.httpmarco.polocloud.suite.dependencies.pool.DependencyPool;
@@ -24,7 +25,7 @@ public final class DependencyProviderImpl implements DependencyProvider {
     public DependencyProviderImpl() {
         this.originalSlot = new OriginalDependencySlot();
 
-        log.info("Loading suite dependencies...");
+        log.info(PolocloudSuite.instance().translation().get("loading.dependencies"));
 
         var requiredDependencies = DependencyPool.read();
 

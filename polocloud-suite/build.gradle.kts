@@ -14,7 +14,7 @@ dependencies {
     implementation(libs.jline.jansi)
 
     // need grpc -> improve dependency
-    implementation("com.google.guava:failureaccess:1.0.2")
+    implementation("com.google.guava:failureaccess:1.0.3")
 
     compileOnly(project(":polocloud-grpc"))
     compileOnly(project(":polocloud-api"))
